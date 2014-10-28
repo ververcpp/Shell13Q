@@ -311,7 +311,7 @@ header {
     background-color: $body-background-color;
     position: relative;
     padding: 1.5em 0 0 0;
-    @include transition-macro(transform 0.2s ease);
+    @include transition-macro(all 0.2s ease);
     &.activeMenu {
       @include transform-macro(translateX($nav-width)) ;
     }
@@ -331,7 +331,7 @@ header {
     z-index: 9999;
     width: $nav-width;
     @include transform-macro(translateX(0 - $nav-width));
-    @include transition-macro(transform 0.2s ease);
+    @include transition-macro(all 0.2s ease);
     &.activeMenu {
       @include transform-macro(translateX(0px)) ;
     }
@@ -341,9 +341,9 @@ header {
     width: 100%;
     overflow: auto;
     margin-left: 0;
-    @include transition-macro(transform 0.2s ease);
+    @include transition-macro(all 0.2s ease);
     &.activeMenu {
-      transform: translateX($nav-width);
+      @include transform-macro(translateX($nav-width));
     }
 
     article {
