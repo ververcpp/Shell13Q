@@ -18,6 +18,21 @@ $iphone-margin: 20px;
   margin-right: $value;
 }
 
+@mixin transform-macro($value) {
+  transform: $value;
+  -ms-transform: $value;   /* IE 9 */
+  -moz-transform: $value;  /* Firefox */
+  -webkit-transform: $value; /* Safari 和 Chrome */
+  -o-transform: $value;  /* Opera */
+}
+
+@mixin transition-macro($value) {
+  transition: $value;
+  -moz-transition: $value; /* Firefox 4 */
+  -webkit-transition: $value; /* Safari 和 Chrome */
+  -o-transition: $value; /* Opera */
+}
+
 body {
   color: $color;
   font-size: $font-size;
@@ -56,7 +71,7 @@ a{
   &:hover {
     color: red;
   }
-  transition: color 0.2s linear;
+  @include transition-macro(color 0.2s linear) ;
 }
 //header
 header {
@@ -283,9 +298,9 @@ header {
     background-color: $body-background-color;
     position: relative;
     padding: 1.5em 0 0 0;
-    transition: transform 0.2s ease;
+    @include transition-macro(transform 0.2s ease);
     &.activeMenu {
-      transform: translateX($nav-width);
+      @include transform-macro(translateX($nav-width)) ;
     }
     h1 {
       font-size: 2em;
@@ -302,10 +317,10 @@ header {
     top: 0;
     z-index: 9999;
     width: $nav-width;
-    transform: translateX(0 - $nav-width);
-    transition: transform 0.2s ease;
+    @include transform-macro(translateX(0 - $nav-width));
+    @include transition-macro(transform 0.2s ease);
     &.activeMenu {
-      transform: translateX(0px);
+      @include transform-macro(translateX(0px)) ;
     }
   }
 
@@ -313,7 +328,7 @@ header {
     width: 100%;
     overflow: auto;
     margin-left: 0;
-    transition: transform 0.2s ease;
+    @include transition-macro(transform 0.2s ease);
     &.activeMenu {
       transform: translateX($nav-width);
     }

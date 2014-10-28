@@ -11,14 +11,14 @@ echo "Starting build"
 sass site/style/main.scss site/style/main.css
 node build.js
 echo "Build complete"
-rm -rf `ls -d * | egrep -v 'site|node_modules' | xargs`
+rm -vrf `ls -d * | egrep -v 'site|node_modules' | xargs`
 echo "Cleaned out directory"
 mv site/* .
 if [[ $BUILD_ONLY ]]; then
   exit
 fi
 rm -rf site
-git add .
+git add . -A
 git commit -m 'update website'
 echo "Commit created"
 git push --force origin gh-pages
