@@ -24,3 +24,4 @@ echo "Commit created"
 git push --force origin gh-pages
 echo "Deployed to remote"
 git checkout master
+git ls-files -d | xargs git checkout
