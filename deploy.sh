@@ -11,7 +11,7 @@ echo "Starting build"
 sass site/style/main.scss site/style/main.css
 node build.js
 echo "Build complete"
-rm -rf `ls -d * | grep -v 'site' | xargs`
+rm -rf `ls -d * | 3grep -v 'site|node_modules' | xargs`
 echo "Cleaned out directory"
 mv site/* .
 if [[ $BUILD_ONLY ]]; then
