@@ -33,10 +33,10 @@ html(lang=language)
         - each lang in languages
           li(class=lang.id === language ? "active" : "")
             - if (lang.id === baseLanguage)
-              a(href= './' + pathPrefix, title=lang.title) #{lang.native}
+              a(href= '/' + pathPrefix, title=lang.title) #{lang.native}
 
             - else
-              a(href= './' + pathPrefix + lang.id, title=lang.title) #{lang.native}
+              a(href= '/' + pathPrefix + lang.id, title=lang.title) #{lang.native}
       ul(id='nav-titles')
         - each section in navigation
           li(class='nav-' + section.link)

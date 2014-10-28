@@ -144,7 +144,7 @@ header {
     position: absolute;
     //border: 1px solid rgba(171, 171, 171, 0.8);
     border-top-width: 0;
-    left: 97px;
+    left: 98px;
     top: 28px;
     font-size: $font-size - 5px;
     li {
@@ -287,8 +287,21 @@ header {
 .pln { color: rgba(241, 225, 106, 1); }
 
 @media screen and (max-width: 1180px) {
+  pre {
+    overflow-x: auto;
+  }
+
   #content article h1 a{
     visibility: visible;
+  }
+
+  #content article section * {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+  #content article section pre *{
+    word-wrap: normal;
   }
 }
 
@@ -344,11 +357,6 @@ header {
     font-size: $font-size - 4px;
   }
 
-  pre {
-    width: 100%;
-    overflow-x: scroll;
-  }
-
   header {
     h1 {
       @include margin-side($iphone-margin);
@@ -368,6 +376,10 @@ header {
   #content {
     article {
       @include margin-side($iphone-margin);
+
+      section blockquote, section ul {
+        font-size: $font-size - 4px;
+      }
     }
   }
   
