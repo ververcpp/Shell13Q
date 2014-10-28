@@ -1,0 +1,77 @@
+doctype html
+html(lang=language)
+  head
+    title #{title}
+    meta(charset='utf-8')
+    meta(name='description', content=description)
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='shortcut icon' href='/' + pathPrefix + 'favicon.ico?v=2')
+
+    - if (language === baseLanguage) 
+      link(rel='stylesheet', href='style/main.css', media='all')
+      //link(rel='stylesheet', href='style/print.css', media='print')
+      <!-- [if lt IE 9]>
+      <script src="javascript/html5.js"></script>
+      <![endif]-->
+    - else
+      link(rel='stylesheet', href='../style/main.css', media='all')
+      //link(rel='stylesheet', href='../style/print.css', media='print')
+      <!-- [if lt IE 9]>
+      <script src="../javascript/html5.js"></script>
+      <![endif]-->
+  
+  body
+    //header
+    header
+      h1 <span>~$</span> #{title}
+
+    // Navigation
+    nav(id='nav-main')
+      div(class='tag') Language: 
+        span(class='current-language')
+      ul(id='nav-languages')
+        - each lang in languages
+          li(class=lang.id === language ? "active" : "")
+            - if (lang.id === baseLanguage)
+              a(href= './' + pathPrefix, title=lang.title) #{lang.native}
+
+            - else
+              a(href= './' + pathPrefix + lang.id, title=lang.title) #{lang.native}
+      ul(id='nav-titles')
+        - each section in navigation
+          li(class='nav-' + section.link)
+            a(href='#' + section.link)!=section.article.title
+
+    // Navigation-button
+    div(id='nav-button')
+      svg(class='menu-icon', width='30', height='20', viewPort='0 0 30 20', version='1.1', xmlns='http://www.w3.org/2000/svg')
+        rect(x='0', y='0', width='30', height='4')
+        rect(x='0', y='8', width='30', height='4')
+        rect(x='0', y='16', width='30', height='4')
+
+    //Sections
+    div(id='content')
+      - each section in sections
+        article(id=section.link)
+          h1!=section.article.title
+            a(href=section.sourceURL) #
+          section!=section.article.content
+
+    - if (language === baseLanguage)
+      script(src='javascript/jquery.min.js')
+      script(src='javascript/prettify.js')
+      script(src='javascript/main.js')
+    - else 
+      script(src='../javascript/jquery.min.js')
+      script(src='../javascript/prettify.js')
+      script(src='../javascript/main.js')
+
+
+      
+
+
+
+
+
+
+    

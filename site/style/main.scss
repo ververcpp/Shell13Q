@@ -1,0 +1,358 @@
+@import "reset.css";
+$font-size: 18px;
+$body-background-color: rgba(35, 35, 35, 1);
+$side-background-color: rgba(46, 46, 46, 1);
+$color: #FFF;
+$title-color: rgba(241, 225, 106, 1);
+$link-color: rgba(124, 222, 134, 1);
+$nav-color: rgba(173, 173, 173, 1);
+$seperator-color: rgba(171, 171, 171, 0.8);
+$promote-color: rgba(241, 225, 106, 1);
+$side-width: 250px;
+$nav-width: 250px;
+$ipad-margin: 8%;
+$iphone-margin: 20px;
+
+@mixin margin-side($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+body {
+  color: $color;
+  font-size: $font-size;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  min-height: 100%;
+  background-color: $body-background-color;
+}
+
+strong {
+  font-weight: bolder;
+}
+
+code {
+  font-size: $font-size - 2px;
+  font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+hr {
+  border: 0;
+  height: 0;
+  width: 50%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+a{
+  text-decoration: none;
+  &:link, &:visited {
+    color: $link-color;
+  }
+  &:hover {
+    color: red;
+  }
+  transition: color 0.2s linear;
+}
+//header
+header {
+  padding: 1.5em 0;
+  background-color: $side-background-color;
+  text-align: left;
+  width: $side-width;
+  font-family: 'Courier New', Courier, serif;
+  position: fixed;
+  h1 {
+    margin-left: 20px;
+    border-bottom: 1px dashed $nav-color;
+    font-size: 1.5em;
+    line-height: 1.5;
+    
+    span {
+      color: $promote-color;
+    }
+  }
+}
+
+/*navigation*/
+#nav-button {
+  position: fixed;
+  top: 40px;
+  left: 20px;
+  display: none;
+  background-color: transparent;
+  opacity: 0.7;
+  z-index: 999;
+  fill: $promote-color;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+#nav-main {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 6em;
+  width: $side-width;
+  background-color: $side-background-color;
+  overflow: auto;
+  font-size: $font-size - 4px;
+
+  .tag {
+    padding-top: 10px;
+    padding-left: 20px;
+    font-size: $font-size - 5px;
+    color: $link-color;
+
+    .current-language {
+      padding: 6px 4px;
+      cursor: pointer;
+
+      &:hover, &.clicked{
+        background-color: $body-background-color;
+        color: red;
+        //margin-left: -1px;
+        //border: 1px solid rgba(171, 171, 171, 0.8);
+      }
+    }
+  }
+
+  #nav-languages {
+    display: none;
+    position: absolute;
+    //border: 1px solid rgba(171, 171, 171, 0.8);
+    border-top-width: 0;
+    left: 97px;
+    top: 28px;
+    font-size: $font-size - 5px;
+    li {
+      padding: 6px 4px ;
+      background-color: $body-background-color;
+      border-top: 1px solid rgba(171, 171, 171, 0.6);
+
+      &.active a{
+        color: red;
+      }
+    }
+  }
+
+  #nav-titles {
+    margin-top: 10px;
+
+    li {
+      line-height: 1.2;
+
+      &:hover {
+        background-color: $body-background-color;
+      }
+
+      a {
+        display: block;
+        padding: 5px 5px 5px 20px;
+        height: 100%;
+        &:link, &:visited {
+          color: $nav-color;
+        }  
+        &:hover {
+          color: $title-color;
+        }
+
+        .number {
+          float: left;
+          margin-right: 5px;
+        }
+
+        .title {
+          display: block;
+          overflow: hidden;
+        }
+      }
+    }
+    .current {
+      background-color: $body-background-color;
+      a:link, a:visited {
+        color: $title-color;
+      }
+    }
+  }
+}
+
+/*content*/
+#content {
+  margin-left: $side-width;
+
+  article {
+    &:first-child {
+      margin-top: 0em;
+      padding-top: 1.5em;
+      border: 0;
+      h1 {
+        padding-top: 0; 
+      }
+    }
+    margin: 30px 5%;
+
+    padding-bottom: 10px;
+    line-height: 1.5;
+    border-top: 1px solid $seperator-color;
+    h1 {
+      color: $title-color;
+      font-size: 1.5em;
+      padding-top: 0.8em;
+      display: inline-block;
+
+      code {
+        font-size: 1em;
+      }
+      
+      a {
+        margin-left: 10px;
+        visibility: hidden;
+      }
+      &:hover {
+        a {
+          visibility: visible;
+        }
+      }
+    }
+    section {
+      padding-top: 10px;
+
+      p {
+        margin: 20px 0;
+      }
+
+      blockquote {
+        p {
+          margin: 10px 0;
+        }
+        margin: 10px;
+        padding: 10px;
+        border-top: 1px dashed $seperator-color;
+        border-bottom: 1px dashed $seperator-color;
+        font-size: $font-size - 2px;
+      }
+      
+      pre {
+        margin: 10px;
+        padding: 20px;
+        background-color: #000;
+        border-radius: 5px;
+      }
+
+      ul {
+        font-size: $font-size - 2px;
+        margin-left: 10px;
+        li {
+          padding-left: 20px;
+        }
+      }
+    }
+  }
+}
+// Syntax Highlighting
+
+.str { color: #1DC116; }
+.kwd { color: #E83737; }
+.com { color: #428BDD; }
+.typ { color: #FFAA3E; }
+.lit { color: #D1EDFF; }
+.pun { color: #D1EDFF; }
+.tag { color: #008; }
+.atn { color: #606; }
+.atv { color: #080; }
+.dec { color: #606; }
+.pln { color: rgba(241, 225, 106, 1); }
+
+@media screen and (max-width: 1180px) {
+  #content article h1 a{
+    visibility: visible;
+  }
+}
+
+@media screen and (max-width: 979px) {
+  header{
+    width: 100%;
+    background-color: $body-background-color;
+    position: relative;
+    padding: 1.5em 0 0 0;
+    transition: transform 0.2s ease;
+    &.activeMenu {
+      transform: translateX($nav-width);
+    }
+    h1 {
+      font-size: 2em;
+      border: 0;
+      @include margin-side($ipad-margin);
+    }
+  }
+
+  #nav-button {
+    display: block;
+  }
+
+  #nav-main {
+    top: 0;
+    z-index: 9999;
+    width: $nav-width;
+    transform: translateX(0 - $nav-width);
+    transition: transform 0.2s ease;
+    &.activeMenu {
+      transform: translateX(0px);
+    }
+  }
+
+  #content {
+    width: 100%;
+    overflow: auto;
+    margin-left: 0;
+    transition: transform 0.2s ease;
+    &.activeMenu {
+      transform: translateX($nav-width);
+    }
+
+    article {
+      @include margin-side($ipad-margin);
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    font-size: $font-size - 4px;
+  }
+
+  pre {
+    width: 100%;
+    overflow-x: scroll;
+  }
+
+  header {
+    h1 {
+      @include margin-side($iphone-margin);
+    }
+  }
+  
+  #nav-button {
+    padding: 5px;
+    border: 1px solid $seperator-color;
+    border-radius: 2px;
+    border-left-width: 0;
+    top: auto;
+    left: 0;
+    bottom: 60px;
+  }
+
+  #content {
+    article {
+      @include margin-side($iphone-margin);
+    }
+  }
+  
+}
+
+
+
