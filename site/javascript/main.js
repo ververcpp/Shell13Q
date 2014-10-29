@@ -122,6 +122,10 @@ $(document).ready(function () {
         $("#nav-main, #content, header").addClass("activeMenu");
     });
 
+    $("#nav-titles a").bind("click", function() {
+        $("#nav-main, header, #content").removeClass("activeMenu");
+    })
+
     $("header, #content").bind("click", function() {
         $("#nav-main, header, #content").removeClass("activeMenu");
     }).bind("swipeleft", function() {
