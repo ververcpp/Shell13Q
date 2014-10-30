@@ -1,7 +1,7 @@
-@import "reset.css";
 $font-size: 18px;
 $body-background-color: rgba(35, 35, 35, 1);
 $side-background-color: rgba(46, 46, 46, 1);
+$code-background-color: rgba(66, 66, 66, 1);
 $color: #FFF;
 $title-color: rgba(241, 225, 106, 1);
 $link-color: rgba(124, 222, 134, 1);
@@ -33,6 +33,38 @@ $iphone-margin: 20px;
   -o-transition: $value; /* Opera */
 }
 
+/* Eric Meyer's reset.css v1.0 | 20080212 */
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, cite, code,
+del, em, img, ins, kbd,
+strong, sub, sup,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
 body {
   color: $color;
   font-size: $font-size;
@@ -52,6 +84,8 @@ strong {
 code {
   font-size: $font-size - 2px;
   font-family: Consolas, 'Courier New', Courier, monospace;
+  background-color: $code-background-color;
+  padding: 0 2px;
 }
 
 hr {
@@ -260,6 +294,10 @@ header {
         padding: 20px;
         background-color: #000;
         border-radius: 5px;
+        code {
+          padding: 0;
+          background-color: transparent;
+        }
       }
 
       ul {
@@ -303,6 +341,14 @@ header {
   #content article section pre *{
     word-wrap: normal;
   }
+}
+
+footer {
+  margin-left: $side-width + 50px;
+  margin-right: 5%;
+  font-size: $font-size - 4px;
+  border-top: 2px dashed gray;
+  padding: 20px 0;
 }
 
 @media screen and (max-width: 979px) {

@@ -19,7 +19,17 @@ html(lang=language)
       <!-- [if lt IE 9]>
       <script src="../javascript/html5.js"></script>
       <![endif]-->
-  
+    
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-44399668-1', 'auto');
+      ga('send', 'pageview');
+
+
   body
     //header
     header
@@ -56,6 +66,22 @@ html(lang=language)
           h1!=section.article.title
             a(href=section.sourceURL) #
           section!=section.article.content
+
+    //Footer
+    footer
+      p 
+        | Built with 
+        a(href='http://nodejs.org/') Node.js 
+        | using a 
+        a(href='http://jade-lang.com/') jade 
+        | template. 
+        | Hosted by 
+        a(href='http://https://github.com/') Github
+        |. 
+        a(href='https://github.com/ververcpp/Shell13Q') Fork 
+        | me on Github.
+
+
 
     - if (language === baseLanguage)
       script(src='javascript/jquery.min.js')
