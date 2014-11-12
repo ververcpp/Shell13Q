@@ -2,7 +2,7 @@ $font-size: 18px;
 $body-background-color: rgba(35, 35, 35, 1);
 $side-background-color: rgba(46, 46, 46, 1);
 $code-background-color: rgba(66, 66, 66, 1);
-$color: #FFF;
+$color: rgba(245, 245, 245, 1);
 $title-color: rgba(241, 225, 106, 1);
 $link-color: rgba(124, 222, 134, 1);
 $nav-color: rgba(173, 173, 173, 1);
@@ -68,7 +68,7 @@ q:before, q:after {
 body {
   color: $color;
   font-size: $font-size;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: "Open Sans","Clear Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
   min-height: 100%;
   background-color: $body-background-color;
 }
@@ -113,7 +113,6 @@ header {
   background-color: $side-background-color;
   text-align: left;
   width: $side-width;
-  font-family: 'Courier New', Courier, serif;
   position: fixed;
   h1 {
     margin-left: 20px;
@@ -247,9 +246,10 @@ header {
       }
     }
     margin: 30px 5%;
-
+  
     padding-bottom: 10px;
     line-height: 1.5;
+    text-align: justify;
     border-top: 1px solid $seperator-color;
     h1 {
       color: $title-color;

@@ -2,6 +2,7 @@
     "title": "Shell十三問",
     "native": "繁体中文",
     "description": "關於 shell 基礎的十三個問題",
+    "keywords": "shell 十三問 基礎 入門 教程",
     "sections": [
         {
             "title": "簡介",

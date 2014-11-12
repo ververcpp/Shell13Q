@@ -8,7 +8,7 @@ ChinaUnix論壇shell基礎學習經典。
 
 ##Contributing
 
-網站引擎借鑑[Javascript-Garden](https://github.com/BonsaiDen/JavaScript-Garden)，使用Node和Jade創建， 文章使用Markdown生成。
+網站引擎借鑑[JavaScript-Garden](https://github.com/BonsaiDen/JavaScript-Garden)，使用Node和Jade創建， 文章使用Markdown生成。
 
 如有任何問題，歡迎提交[Issue](https://github.com/ververcpp/Shell13Q/issues)。  
 亦歡迎提交各種語言的翻譯。

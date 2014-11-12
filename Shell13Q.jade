@@ -4,6 +4,8 @@ html(lang=language)
     title #{title}
     meta(charset='utf-8')
     meta(name='description', content=description)
+    meta(name='keywords', content=keywords)
+    meta(name='robots', content='index,follow')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='shortcut icon' href='/' + pathPrefix + 'favicon.ico?v=2')
 
@@ -11,13 +13,13 @@ html(lang=language)
       link(rel='stylesheet', href='style/main.css', media='all')
       //link(rel='stylesheet', href='style/print.css', media='print')
       <!-- [if lt IE 9]>
-      <script src="javascript/html5.js"></script>
+      <script src='javascript/html5.js'></script>
       <![endif]-->
     - else
       link(rel='stylesheet', href='../style/main.css', media='all')
       //link(rel='stylesheet', href='../style/print.css', media='print')
       <!-- [if lt IE 9]>
-      <script src="../javascript/html5.js"></script>
+      <script src='../javascript/html5.js'></script>
       <![endif]-->
     
     script.
@@ -31,7 +33,7 @@ html(lang=language)
 
 
   body
-    //header
+    // header
     header
       h1 <span>~$</span> #{title}
 
@@ -41,7 +43,7 @@ html(lang=language)
         span(class='current-language')
       ul(id='nav-languages')
         - each lang in languages
-          li(class=lang.id === language ? "active" : "")
+          li(class=lang.id === language ? 'active' : '')
             - if (lang.id === baseLanguage)
               a(href= '/' + pathPrefix, title=lang.title) #{lang.native}
 
