@@ -1,13 +1,14 @@
 $font-size: 18px;
-$body-background-color: rgba(35, 35, 35, 1);
-$side-background-color: rgba(46, 46, 46, 1);
-$code-background-color: rgba(66, 66, 66, 1);
-$color: rgba(245, 245, 245, 1);
-$title-color: rgba(241, 225, 106, 1);
-$link-color: rgba(124, 222, 134, 1);
-$nav-color: rgba(173, 173, 173, 1);
+$body-background-color: rgba(255, 255, 255, 1);
+$code-background-color: rgba(235, 235, 235, 1);
+$code-block-background-color: #000;
+$border-color: rgba(235, 235, 235, 1);
+$color: rgba(0, 0, 0, 1);
+$title-color: rgba(0, 0, 0, 1);
+$link-color: rgba(0, 0, 238, 1);
+$nav-color: rgba(0, 0, 0, 1);
 $seperator-color: rgba(171, 171, 171, 0.8);
-$promote-color: rgba(241, 225, 106, 1);
+$promote-color: #f1e16a;
 $side-width: 250px;
 $nav-width: 250px;
 $ipad-margin: 8%;
@@ -68,7 +69,7 @@ q:before, q:after {
 body {
   color: $color;
   font-size: $font-size;
-  font-family: "Open Sans","Clear Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   min-height: 100%;
   background-color: $body-background-color;
 }
@@ -82,7 +83,7 @@ strong {
 }
 
 code {
-  font-size: $font-size - 2px;
+  font-size: $font-size - 3px;
   font-family: Consolas, 'Courier New', Courier, monospace;
   background-color: $code-background-color;
   padding: 0 2px;
@@ -107,39 +108,28 @@ a{
   }
   @include transition-macro(color 0.2s linear) ;
 }
-//header
-header {
-  padding: 1.5em 0;
-  background-color: $side-background-color;
-  text-align: left;
-  width: $side-width;
-  position: fixed;
-  h1 {
-    margin-left: 20px;
-    border-bottom: 1px dashed $nav-color;
-    font-size: 1.5em;
-    line-height: 1.5;
-    
-    span {
-      color: $promote-color;
-    }
-  }
-}
 
-/*navigation*/
-#nav-button {
+/* navigation */
+#nav-bar {
   position: fixed;
-  top: 40px;
-  left: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
   display: none;
-  background-color: transparent;
-  opacity: 0.7;
-  z-index: 999;
-  fill: $promote-color;
-  cursor: pointer;
+  background-color: rgba(247, 247, 247, 1);
+  border-bottom: 1px solid $border-color;
+  z-index: 10;
 
-  &:hover {
-    opacity: 1;
+  #nav-button {
+    display: inline-block;
+    fill: $color;
+    cursor: pointer;
+    opacity: 0.7;
+    margin: 10px 0 0 10px;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
@@ -147,9 +137,11 @@ header {
   position: fixed;
   bottom: 0;
   left: 0;
-  top: 6em;
+  top: 0;
+  padding-top: 20px;
   width: $side-width;
-  background-color: $side-background-color;
+  background-color: $body-background-color;
+  border-right: 2px solid $border-color;
   overflow: auto;
   font-size: $font-size - 4px;
 
@@ -177,7 +169,7 @@ header {
     position: absolute;
     //border: 1px solid rgba(171, 171, 171, 0.8);
     border-top-width: 0;
-    left: 98px;
+    left: 85px;
     top: 28px;
     font-size: $font-size - 5px;
     li {
@@ -209,7 +201,7 @@ header {
           color: $nav-color;
         }  
         &:hover {
-          color: $title-color;
+          color: $link-color;
         }
 
         .number {
@@ -226,13 +218,39 @@ header {
     .current {
       background-color: $body-background-color;
       a:link, a:visited {
-        color: $title-color;
+        color: $link-color;
       }
     }
   }
 }
 
-/*content*/
+/* header */
+header {
+  padding: 1.5em 0 0;
+  text-align: left;
+  margin-left: $side-width;
+  font-family: Consolas, 'Courier New', Courier, monospace;
+  h1 {
+    margin: 0 5%;
+    padding: 30px 0 30px 5px;
+    font-size: 1.5em;
+    line-height: 1.5;
+    background-color: $code-block-background-color;
+    border-radius: 5px;
+    color: #fff;
+    
+    span {
+      color: $promote-color;
+    }
+    .title {
+      padding: 0 5px;
+      letter-spacing: 5px;
+      color: red;
+    }
+  }
+}
+
+/* content */
 #content {
   margin-left: $side-width;
 
@@ -250,6 +268,7 @@ header {
     padding-bottom: 10px;
     line-height: 1.5;
     text-align: justify;
+    text-justify: ideographic;
     border-top: 1px solid $seperator-color;
     h1 {
       color: $title-color;
@@ -292,7 +311,7 @@ header {
       pre {
         margin: 10px;
         padding: 20px;
-        background-color: #000;
+        background-color: $code-block-background-color;
         border-radius: 5px;
         code {
           padding: 0;
@@ -310,6 +329,16 @@ header {
     }
   }
 }
+
+/* footer */
+footer {
+  margin-left: $side-width + 50px;
+  margin-right: 5%;
+  font-size: $font-size - 4px;
+  border-top: 2px dashed gray;
+  padding: 20px 0;
+}
+
 // Syntax Highlighting
 
 .str { color: #1DC116; }
@@ -343,33 +372,28 @@ header {
   }
 }
 
-footer {
-  margin-left: $side-width + 50px;
-  margin-right: 5%;
-  font-size: $font-size - 4px;
-  border-top: 2px dashed gray;
-  padding: 20px 0;
-}
-
 @media screen and (max-width: 979px) {
   header{
     width: 100%;
-    background-color: $body-background-color;
-    position: relative;
+    margin-top: 30px;
+    margin-left: 0;
     padding: 1.5em 0 0 0;
     @include transition-macro(all 0.2s ease);
     &.activeMenu {
-      @include transform-macro(translateX($nav-width)) ;
+      @include transform-macro(translateX($nav-width));
     }
     h1 {
-      font-size: 2em;
       border: 0;
       @include margin-side($ipad-margin);
     }
   }
 
-  #nav-button {
+  #nav-bar {
     display: block;
+    @include transition-macro(all 0.2s ease);
+    &.activeMenu {
+      @include transform-macro(translateX($nav-width));
+    }
   }
 
   #nav-main {
@@ -408,16 +432,6 @@ footer {
       @include margin-side($iphone-margin);
     }
   }
-  
-  #nav-button {
-    padding: 5px;
-    border: 1px solid $seperator-color;
-    border-radius: 2px;
-    border-left-width: 0;
-    top: auto;
-    left: 0;
-    bottom: 60px;
-  }
 
   #content {
     article {
@@ -427,9 +441,5 @@ footer {
         font-size: $font-size - 4px;
       }
     }
-  }
-  
+  } 
 }
-
-
-

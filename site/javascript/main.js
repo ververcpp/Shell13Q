@@ -119,10 +119,10 @@ $(document).ready(function () {
     prettyPrint();
 
     $("#nav-button").bind("click", function() {
-        $("#nav-main, #content, header").addClass("activeMenu");
+        $("#nav-main, #nav-bar, #content, header").toggleClass("activeMenu");
     });
 
     $("#nav-titles a, header, #content").bind("click", function() {
-        $("#nav-main, header, #content").removeClass("activeMenu");
+        $("#nav-main, #nav-bar, header, #content").removeClass("activeMenu");
     });
 });

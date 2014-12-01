@@ -33,9 +33,6 @@ html(lang=language)
 
 
   body
-    // header
-    header
-      h1 <span>~$</span> #{title}
 
     // Navigation
     nav(id='nav-main')
@@ -55,12 +52,17 @@ html(lang=language)
             a(href='#' + section.link)!=section.article.title
 
     // Navigation-button
-    div(id='nav-button')
-      svg(class='menu-icon', width='30', height='20', viewPort='0 0 30 20', version='1.1', xmlns='http://www.w3.org/2000/svg')
-        rect(x='0', y='0', width='30', height='4')
-        rect(x='0', y='8', width='30', height='4')
-        rect(x='0', y='16', width='30', height='4')
-
+    div(id='nav-bar')
+      div(id='nav-button')
+        svg(class='menu-icon', width='30', height='20', viewPort='0 0 20 20', version='1.1', xmlns='http://www.w3.org/2000/svg')
+          rect(x='0', y='0', width='30', height='4')
+          rect(x='0', y='8', width='30', height='4')
+          rect(x='0', y='16', width='30', height='4')
+    
+    // header
+    header
+      h1 <span>~$</span> echo "<span class="title">#{title}</span>"
+  
     //Sections
     div(id='content')
       - each section in sections
