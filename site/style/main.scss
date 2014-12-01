@@ -158,8 +158,8 @@ a{
       &:hover, &.clicked{
         background-color: $body-background-color;
         color: red;
-        //margin-left: -1px;
-        //border: 1px solid rgba(171, 171, 171, 0.8);
+        margin-left: -1px;
+        border: 1px solid rgba(171, 171, 171, 0.8);
       }
     }
   }
@@ -167,10 +167,11 @@ a{
   #nav-languages {
     display: none;
     position: absolute;
-    //border: 1px solid rgba(171, 171, 171, 0.8);
+    margin-left: -1px;
+    border: 1px solid rgba(171, 171, 171, 0.8);
     border-top-width: 0;
     left: 85px;
-    top: 28px;
+    top: 48px;
     font-size: $font-size - 5px;
     li {
       padding: 6px 4px ;
