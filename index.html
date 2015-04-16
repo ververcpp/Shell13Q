@@ -1,0 +1,1565 @@
+<!DOCTYPE html><html lang="zhtw"><head><title>Shell十三問</title><meta charset="utf-8"><meta name="description" content="關於 shell 基礎的十三個問題"><meta name="keywords" content="shell 十三問 基礎 入門 教程"><meta name="robots" content="index,follow"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" href="/Shell13Q/favicon.ico?v=2"><link rel="stylesheet" href="style/main.css" media="all"><!--link(rel='stylesheet', href='style/print.css', media='print')--><!-- [if lt IE 9]>
+<script src='javascript/html5.js'></script>
+<![endif]--><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-44399668-1', 'auto');
+ga('send', 'pageview');
+
+</script></head><body><!-- Navigation--><nav id="nav-main"><div class="tag">Language: <span class="current-language"></span></div><ul id="nav-languages"><li class="active"><a href="/Shell13Q/" title="Shell十三問">繁体中文</a></li></ul><ul id="nav-titles"><li class="nav-Intro"><a href="#Intro"><span class="number"></span><span class="title"> 簡介</span></a></li><li class="nav-Perface"><a href="#Perface"><span class="number"></span><span class="title"> 前言</span></a></li><li class="nav-Q1"><a href="#Q1"><span class="number">Q1.</span><span class="title"> 為何叫做 shell ？</span></a></li><li class="nav-Q2"><a href="#Q2"><span class="number">Q2.</span><span class="title"> shell prompt(PS1)與 Carriage Return(CR)的關係 ？ </span></a></li><li class="nav-Q3"><a href="#Q3"><span class="number">Q3.</span><span class="title"> 別人 <code>echo</code>、你也 <code>echo</code> ，是問 <code>echo</code> 知多少？</span></a></li><li class="nav-Q4"><a href="#Q4"><span class="number">Q4.</span><span class="title"> <code>&quot;&quot;</code>(雙引號) 與 <code>&#39; &#39;</code>(單引號)差在哪？</span></a></li><li class="nav-Q5"><a href="#Q5"><span class="number">Q5.</span><span class="title"> <code>var=value</code>？<code>export</code> 前後差在哪？</span></a></li><li class="nav-Q6"><a href="#Q6"><span class="number">Q6.</span><span class="title"> <code>exec</code> 跟 <code>source</code> 差在哪？</span></a></li><li class="nav-Q7"><a href="#Q7"><span class="number">Q7.</span><span class="title"> <code>()</code> 與 <code>{}</code> 差在哪？</span></a></li><li class="nav-Q8"><a href="#Q8"><span class="number">Q8.</span><span class="title"> <code>$(())</code> 與 <code>$()</code> 還有 <code>${}</code> 差在哪？ </span></a></li><li class="nav-Q9"><a href="#Q9"><span class="number">Q9.</span><span class="title"> <code>$@</code> 與 <code>$*</code> 差在哪？</span></a></li><li class="nav-Q10"><a href="#Q10"><span class="number">Q10.</span><span class="title"> <code>&amp;&amp;</code> 與 <code>||</code> 差在哪？</span></a></li><li class="nav-Q11"><a href="#Q11"><span class="number">Q11.</span><span class="title"> <code>&gt;</code> 與 <code>&lt;</code> 差在哪？</span></a></li><li class="nav-Q12"><a href="#Q12"><span class="number">Q12.</span><span class="title"> 你要 <code>if</code> 還是 <code>case</code> 呢？</span></a></li><li class="nav-Q13"><a href="#Q13"><span class="number">Q13.</span><span class="title"> <code>for</code> what?  <code>while</code> 與 <code>until</code> 差在哪？</span></a></li><li class="nav-B1-I"><a href="#B1-I"><span class="number">B1-I.</span><span class="title"> [^] 跟 [!] 差在哪？(Wildcard)</span></a></li><li class="nav-B1-II"><a href="#B1-II"><span class="number">B1-II.</span><span class="title"> [^] 跟 [!] 差在哪？(Regular Expression)</span></a></li></ul></nav><!-- Navigation-button--><div id="nav-bar"><div id="nav-button"><svg width="30" height="20" viewPort="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" class="menu-icon"><rect x="0" y="0" width="30" height="4"></rect><rect x="0" y="8" width="30" height="4"></rect><rect x="0" y="16" width="30" height="4"></rect></svg></div></div><!-- header--><header><h1><span>~$</span> echo "<span class="title">Shell十三問</span>"</h1></header><!--Sections--><div id="content"><article id="Intro"><h1><span class="number"></span><span class="title"> 簡介</span><a href="#">#</a></h1><section><p>本文為 <strong> 轉載 </strong>，<a href="http://bbs.chinaunix.net/thread-218853-1-1.html">原載</a>於 ChinaUnix 論壇，原文作者：<a href="http://www.study-area.org/netman.htm">網中人</a>。由 <a href="http://ververcpp.github.io">ververcpp</a> 排版整理。</p>
+<p>此文為 shell 基礎學習的經典系列文章，為方便讀者查看學習，故在此重新編輯排版，並存放在 <a href="https://github.com/ververcpp/Shell13Q">Github</a> 開源社區。如有任何問題，歡迎提交<a href="https://github.com/ververcpp/Shell13Q/issues">Issue</a>。
+亦歡迎提交各種語言的翻譯。</p>
+</section></article><article id="Perface"><h1><span class="number"></span><span class="title"> 前言</span><a href="http://bbs.chinaunix.net/thread-218853-1-1.html">#</a></h1><section><p>我在 CU 的日子並不長，有幸在 shell 版上與大家結緣。
+除了跟眾前輩學習到不少技巧之外，也常看到不少朋友的問題。
+然而，在眾多問題中，我發現許多瓶頸都源於 shell 的基礎而已。
+每次要解說，卻總有千言萬語不知從何起之感...  </p>
+<p>這次，我不是來回答，而是準備了關於 shell 基礎的十三個問題要問大家﹗
+希望 shell 學習者們能夠透過尋找答案的過程，好好的將 shell 基礎打紮實一點...
+當然了，這些問題我也會逐一解說一遍。只是，我不敢保證甚麼時候能夠完成這趟任務。
+除了時間關係外，個人功力實在有限，很怕匆忙間誤導觀眾就糟糕了。
+若能拋磚引玉，誘得其他前輩出馬補充，那才真的是功德一件﹗  </p>
+<blockquote>
+<p>說明：</p>
+<ol>
+<li>歡迎大家補充 / 擴充問題。</li>
+<li>我接觸電腦中文名稱時是在台灣，因此一些術語或與大陸不同，請自行轉換。 </li>
+<li>我會不定時 &quot;逐題&quot; 說明(以 Linux 上的 bash 為環境)。同時，也會在任何時候進行無預警修改。請讀者自行留意。</li>
+<li>本人於本系列所發表的任文章均可自由以電子格式 (非印刷) 引用、修改、轉載，且不必註明出處(若能註明 CU 更佳)。
+當然，若有錯漏或不當結果，本人也不負任何責任。</li>
+<li>若有人願意整理成冊且付印者，本人僅保留著作權，版權收益之 30% 須捐贈與 CU 論壇管理者，剩餘不究。</li>
+</ol>
+</blockquote>
+</section></article><article id="Q1"><h1><span class="number">Q1.</span><span class="title"> 為何叫做 shell ？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=2#pid1454336">#</a></h1><section><p>在介紹 shell 是甚麼東西之前，不妨讓我們重新檢視使用者與電腦系統的關係：  </p>
+<blockquote>
+<p>圖(FIXME)</p>
+</blockquote>
+<p>我們知道電腦的運作不能離開硬體，但使用者卻無法直接對硬體作驅動，
+硬體的驅動只能透過一個稱為 &quot;作業系統(Operating System)&quot; 的軟體來控管，
+事實上，我們每天所談的 linux ，嚴格來說只是一個作業系統，我們稱之為 &quot;核心(kernel)&quot;。  </p>
+<p>然而，從使用者的角度來說，使用者也沒辦法直接操作 kernel，
+而是透過 kernel 的 &quot;外殼&quot; 程式，也就是所謂的 shell ，來與 kernel 溝通。
+這也正是 kernel 跟 shell 的形像命名關係。如圖：  </p>
+<blockquote>
+<p>圖(FIXME)</p>
+</blockquote>
+<p>從技術角度來說，shell 是一個使用者與系統的互動界面(interface)，
+主要是讓使用者透過命令行 (command line) 來使用系統以完成工作。
+因此，shell 的最簡單的定義就是 --- 命令解譯器(Command Interpreter)：</p>
+<ul>
+<li><strong> 將使用者的命令翻譯給核心處理，</strong>  </li>
+<li><strong> 同時，將核心處理結果翻譯給使用者。</strong>  </li>
+</ul>
+<p>每次當我們完成系統登入(log in)，我們就取得一個互動模式的 shell ，也稱為 login shell 或 primary shell。
+若從行程 (process) 角度來說，我們在 shell 所下達的命令，均是 shell 所產生的子行程。這現像，我們暫可稱之為 fork。 
+如果是執行腳本 (shell script) 的話，腳本中的命令則是由另外一個非互動模式的子 shell (sub shell)來執行的。
+也就是 primary shell 產生 sub shell 的行程，sub shell 再產生 script 中所有命令的行程。
+(關於行程，我們日後有機會再補充。)  </p>
+<p>這裡，我們必須知道：kernel 與 shell 是不同的兩套軟體，而且都是可以被替換的：</p>
+<ul>
+<li>不同的作業系統使用不同的 kernel，  </li>
+<li>而在同一個 kernel 之上，也可使用不同的 shell。  </li>
+</ul>
+<p>在 linux 的預設系統中，通常都可以找到好幾種不同的 shell ，且通常會被列於如下檔案裡：</p>
+<pre><code>/etc/shells
+</code></pre><p>不同的 shell 有著不同的功能，且也彼此各異、或說 &quot;大同小異&quot;。
+常見的 shell 主要分為兩大主流：  </p>
+<ul>
+<li>sh：<ul>
+<li>burne shell (sh)</li>
+<li>burne again shell (bash)</li>
+</ul>
+</li>
+<li>csh：<ul>
+<li>c shell (csh)</li>
+<li>tc shell (tcsh)</li>
+<li>korn shell (ksh)</li>
+</ul>
+</li>
+</ul>
+<p>大部份的 Linux 系統的預設 shell 都是 bash ，其原因大致如下兩點：</p>
+<ul>
+<li><strong> 自由軟體 </strong>  </li>
+<li><strong> 功能強大 </strong>  </li>
+</ul>
+<p>bash 是 gnu project 最成功的產品之一，自推出以來深受廣大 Unix 用戶喜愛，
+且也逐漸成為不少組織的系統標準。</p>
+</section></article><article id="Q2"><h1><span class="number">Q2.</span><span class="title"> shell prompt(PS1)與 Carriage Return(CR)的關係 ？ </span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=2#pid1467910">#</a></h1><section><p>當你成功登錄進一個文字界面之後，大部份情形下，
+你會在熒幕上看到一個不斷閃爍的方塊或底線(視不同版本而別)，
+我們稱之為 <strong> 遊標 </strong>(cursor)。
+遊標的作用就是告訴你接下來你從鍵盤輸入的按鍵所插入的位置，
+且每輸入一鍵遊標便向右邊移動一個格子，若連續輸入太多的話，則自動接在下一行輸入。</p>
+<p>假如你剛完成登錄還沒輸入任何按鍵之前，你所看到的遊標所在位置的同一行的左邊部份，
+我們稱之為 <strong> 提示符號 </strong>(prompt)。
+提示符號的格式或因不同系統版本而各有不同，在 Linux 上，只需留意最接近遊標的一個可見的提示符號，通常是如下兩者之一： </p>
+<blockquote>
+<p><code>$</code>：給一般使用者帳號使用</p>
+<p><code>\#</code>：給 root (管理員)帳號使用</p>
+</blockquote>
+<p>事實上，shell prompt 的意思很簡單：</p>
+<blockquote>
+<p>是 shell 告訴使用者：您現在可以輸入命令行了。</p>
+</blockquote>
+<p>我們可以說，使用者只有在得到 shell prompt 才能打命令行，
+而 cursor 是指示鍵盤在命令行所輸入的位置，使用者每輸入一個鍵，cursor 就往後移動一格，
+直到碰到命令行讀進 CR(Carriage Return，由 Enter 鍵產生)字符為止。<br>CR 的意思也很簡單：</p>
+<blockquote>
+<p>是使用者告訴 shell：老兄你可以執行我的命令行了。  </p>
+</blockquote>
+<p>嚴格來說：  </p>
+<blockquote>
+<p>所謂的命令行，就是在 shell prompt 與 CR 字符之間所輸入的文字。<br>(思考：為何我們這裡堅持使用 CR 字符而不說 Enter 鍵呢？答案在後面的學習中揭曉。)</p>
+</blockquote>
+<p>不同的命令可接受的命令行格式或有不同，一般情況下，一個標準的命令行格式為如下所列：</p>
+<blockquote>
+<p>command_name options argument</p>
+</blockquote>
+<p>若從技術細節來看，shell 會依據 IFS(Internal Field Seperator) 將 command line 所輸入的文字給拆解為 &quot;字段&quot;(word)。
+然後再針對特殊字符 (meta) 先作處理，最後再重組整行 command line 。<br>(注意：請務必理解上兩句話的意思，我們日後的學習中會常回到這裡思考。)</p>
+<p>其中的 IFS 是 shell 預設使用的欄位分隔符號，可以由一個及多個如下按鍵組成：</p>
+<ul>
+<li>空白鍵(White Space)</li>
+<li>表格鍵(Tab)</li>
+<li>回車鍵(Enter)</li>
+</ul>
+<p>系統可接受的命令名稱 (command-name) 可以從如下途逕獲得：</p>
+<ul>
+<li>明確路逕所指定的外部命令</li>
+<li>命令別名(alias)</li>
+<li>自定功能(function)</li>
+<li>shell 內建命令(built-in)</li>
+<li><code>$PATH</code> 之下的外部命令</li>
+</ul>
+<p>每一個命令行均必需含用命令名稱，這是不能缺少的。</p>
+</section></article><article id="Q3"><h1><span class="number">Q3.</span><span class="title"> 別人 <code>echo</code>、你也 <code>echo</code> ，是問 <code>echo</code> 知多少？</span><a href="http://bbs.chinaunix.net/forum.php?mod=viewthread&amp;tid=218853&amp;page=3#pid1482452">#</a></h1><section><p>承接上一章所介紹的 command line ，這裡我們用 <code>echo</code> 這個命令加以進一步說明。
+溫習 --- 標準的 command line 包含三個部件：</p>
+<blockquote>
+<p>command_name option argument</p>
+</blockquote>
+<p><code>echo</code> 是一個非常簡單、直接的 Linux 命令：</p>
+<blockquote>
+<p>將 argument 送出至標準輸出 (STDOUT)，通常就是在監視器(monitor) 上輸出。
+(註：stdout 我們日後有機會再解說，或可先參考如下討論：
+<a href="http://www.chinaunix.net/forum/viewtopic.php?t=191375">http://www.chinaunix.net/forum/viewtopic.php?t=191375</a>)</p>
+</blockquote>
+<p>為了更好理解，不如先讓我們先跑一下 <code>echo</code> 命令好了：</p>
+<pre><code>$ echo
+
+$
+</code></pre><p>你會發現只有一個空白行，然後又回到 shell prompt 上了。
+這是因為 <code>echo</code> 在預設上，在顯示完 argument 之後，還會送出一個換行符號(new-line charactor)。
+但是上面的 command 並沒任何的 argument ，那結果就只剩一個換行符號了...
+若你要取消這個換行符號，可利用 <code>echo</code> 的 <code>-n</code> option ：</p>
+<pre><code>$ echo -n
+$
+</code></pre><p>不妨讓我們回到 command line 的概念上來討論上例的 <code>echo</code> 命令好了：</p>
+<blockquote>
+<p>command line 只有 command_name(<code>echo</code>) 及 option(<code>-n</code>)，並沒有任何 argument 。</p>
+</blockquote>
+<p>要想看看 <code>echo</code> 的 argument ，那還不簡單﹗接下來，你可試試如下的輸入：</p>
+<pre><code>$ echo first line
+first line
+$ echo -n first line
+first line $
+</code></pre><p>於上兩個 <code>echo</code> 命令中，你會發現 argument 的部份顯示在你的熒幕，而換行符號則視 <code>-n</code> option 的有無而別。
+很明顯的，第二個 <code>echo</code> 由於換行符號被取消了，接下來的 shell prompt 就接在輸出結果同一行了... ^_^</p>
+<p>事實上，<code>echo</code> 除了 <code>-n</code> options 之外，常用選項還有：</p>
+<ul>
+<li><code>-e</code> ：啟用反斜線控制字符的轉換(參考下表)</li>
+<li><code>-E</code> ：關閉反斜線控制字符的轉換(預設如此)</li>
+<li><code>-n</code> ：取消行末之換行符號(與 <code>-e</code> 選項下的 <code>\c</code> 字符同意)</li>
+</ul>
+<p>關於 <code>echo</code> 命令所支援的反斜線控制字符如下表：</p>
+<ul>
+<li><code>\a</code>：ALERT / BELL (從系統喇叭送出鈴聲)</li>
+<li><code>\b</code>：BACKSPACE ，也就是向左退格鍵</li>
+<li><code>\c</code>：取消行末之換行符號</li>
+<li><code>\E</code>：ESCAPE，跳脫鍵</li>
+<li><code>\f</code>：FORMFEED，換頁字符</li>
+<li><code>\n</code>：NEWLINE，換行字符</li>
+<li><code>\r</code>：RETURN，回車鍵</li>
+<li><code>\t</code>：TAB，表格跳位鍵</li>
+<li><code>\v</code>：VERTICAL TAB，垂直表格跳位鍵</li>
+<li><code>\n</code>：ASCII 八進位編碼(以 x 開首為十六進位)</li>
+<li><code>\\</code>：反斜線本身<br>(表格資料來自 O&#39;Reilly 出版社之 Learning the Bash Shell, 2nd Ed.)</li>
+</ul>
+<p>或許，我們可以透過實例來了解 <code>echo</code> 的選項及控制字符：</p>
+<p>例一：</p>
+<pre><code>$ echo -e &quot;a\tb\tc\nd\te\tf&quot;
+a       b       c
+d       e       f
+</code></pre><p>上例運用 <code>\t</code> 來區隔 <code>abc</code> 還有 <code>def</code> ，及用 <code>\n</code> 將 <code>def</code> 換至下一行。</p>
+<p>例二：</p>
+<pre><code>$ echo -e &quot;\141\011\142\011\143\012\144\011\145\011\146&quot;
+a       b       c
+d       e       f
+</code></pre><p>與例一的結果一樣，只是使用 ASCII 八進位編碼。</p>
+<p>例三：</p>
+<pre><code>$ echo -e &quot;\x61\x09\x62\x09\x63\x0a\x64\x09\x65\x09\x66&quot;
+a       b       c
+d       e       f
+</code></pre><p>與例二差不多，只是這次換用 ASCII 十六進位編碼。</p>
+<p>例四：</p>
+<pre><code>$ echo -ne &quot;a\tb\tc\nd\te\bf\a&quot;
+a       b       c
+d       f $
+</code></pre><p>因為 <code>e</code> 字母後面是退格鍵(<code>\b</code>)，因此輸出結果就沒有 <code>e</code> 了。
+在結束時聽到一聲鈴嚮，那是 <code>\a</code> 的傑作﹗
+由於同時使用了 <code>-n</code> 選項，因此 shell prompt 緊接在第二行之後。
+若你不用 <code>-n</code> 的話，那你在 <code>\a</code> 後再加個 <code>\c</code> ，也是同樣的效果。</p>
+<p>事實上，在日後的 shell 操作及 shell script 設計上，<code>echo</code> 命令是最常被使用的命令之一。
+比方說，用 <code>echo</code> 來檢查變量值：</p>
+<pre><code>$ A=B
+$ echo $A
+B
+$ echo $?
+0
+</code></pre><p>(註：關於變量概念，我們留到下兩章才跟大家說明。)</p>
+<p>好了，更多的關於 command line 的格式，以及 <code>echo</code> 命令的選項，
+就請您自行多加練習、運用了...</p>
+</section></article><article id="Q4"><h1><span class="number">Q4.</span><span class="title"> <code>&quot;&quot;</code>(雙引號) 與 <code>&#39; &#39;</code>(單引號)差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=4#pid1511745">#</a></h1><section><p>還是回到我們的 command line 來吧...
+經過前面兩章的學習，應該很清楚當你在 shell prompt 後面敲打鍵盤、直到按下 Enter 的時候，
+你輸入的文字就是 command line 了，然後 shell 才會以行程的方式執行你所交給它的命令。
+但是，你又可知道：你在 command line 輸入的每一個文字，對 shell 來說，是有類別之分的呢？</p>
+<p>簡單而言(我不敢說這是精確的定議，註一)，command line 的每一個 charactor ，分為如下兩種：</p>
+<ul>
+<li><code>literal</code>：也就是普通純文字，對 shell 來說沒特殊功能。</li>
+<li><code>meta</code>：對 shell 來說，具有特定功能的特殊保留字元。</li>
+</ul>
+<blockquote>
+<p>(註一：關於 bash shell 在處理 command line 時的順序說明，
+請參考 O&#39;Reilly 出版社之 Learning the Bash Shell, 2nd Edition，第 177 - 180 頁的說明，
+尤其是 178 頁的流程圖 Figure 7-1 ... )</p>
+</blockquote>
+<p><code>literal</code> 沒甚麼好談的，凡舉 <code>abcd</code>、<code>123456</code> 這些 &quot;文字&quot; 都是 <code>literal</code> ... (easy？)
+但 <code>meta</code> 卻常使我們困惑..... (confused?)
+事實上，前兩章我們在 command line 中已碰到兩個機乎每次都會碰到的 <code>meta</code> ：</p>
+<ul>
+<li>IFS：由 <code>&lt;space&gt;</code> 或 <code>&lt;tab&gt;</code> 或 <code>&lt;enter&gt;</code> 三者之一組成(我們常用 <code>&lt;space&gt;</code> )。</li>
+<li>CR：由 <code>&lt;enter&gt;</code> 產生。</li>
+</ul>
+<p>IFS 是用來拆解 command line 的每一個詞 (word) 用的，因為 shell command line 是按詞來處理的。
+而 CR 則是用來結束 command line 用的，這也是為何我們敲 <code>&lt;enter&gt;</code> 命令就會跑的原因。
+除了 IFS 與 CR ，常用的 <code>meta</code> 還有：</p>
+<ul>
+<li><code>=</code> ：設定變量。</li>
+<li><code>$</code> ：作變量或運算替換(請不要與 shell prompt 搞混了)。</li>
+<li><code>&gt;</code> ：重導向 stdout。</li>
+<li><code>&lt;</code> ：重導向 stdin。</li>
+<li><code>|</code> ：命令管線。</li>
+<li><code>&amp;</code> ：重導向 file descriptor ，或將命令置於背境執行。</li>
+<li><code>( )</code> ：將其內的命令置於 nested subshell 執行，或用於運算或命令替換。</li>
+<li><code>{ }</code> ：將其內的命令置於 non-named function 中執行，或用在變量替換的界定範圍。</li>
+<li><code>;</code> ：在前一個命令結束時，而忽略其返回值，繼續執行下一個命令。</li>
+<li><code>&amp;&amp;</code> ：在前一個命令結束時，若返回值為 <code>true</code>，繼續執行下一個命令。</li>
+<li><code>||</code> ：在前一個命令結束時，若返回值為 <code>false</code>，繼續執行下一個命令。</li>
+<li><code>!</code> ：執行 history 列表中的命令</li>
+<li>....</li>
+</ul>
+<p>假如我們需要在 command line 中將這些保留字元的功能關閉的話，就需要 quoting 處理了。
+在 bash 中，常用的 quoting 有如下三種方法：</p>
+<ul>
+<li>hard quote：<code>&#39; &#39;</code> (單引號)，凡在 hard quote 中的所有 <code>meta</code> 均被關閉。</li>
+<li>soft quote： <code>&quot; &quot;</code> (雙引號)，在 soft quoe 中大部份 <code>meta</code> 都會被關閉，但某些則保留(如 <code>$</code>)。(註二)</li>
+<li>escape ： <code>\</code>(反斜線)，只有緊接在 escape (跳脫字符)之後的單一 <code>meta</code> 才被關閉。</li>
+</ul>
+<blockquote>
+<p>( 註二：在 soft quote 中被豁免的具體 <code>meta</code> 清單，我不完全知道，
+有待大家補充，或透過實作來發現及理解。 )</p>
+</blockquote>
+<p>下面的例子將有助於我們對 quoting 的了解：</p>
+<pre><code>$ A=B C        # 空白鍵未被關掉，作為 IFS 處理。
+$ C: command not found. 
+$ echo $A
+
+$ A=&quot;B C&quot;        # 空白鍵已被關掉，僅作為空白鍵處理。
+$ echo $A
+B C
+</code></pre><p>在第一次設定 <code>A</code> 變量時，由於空白鍵沒被關閉，command line 將被解讀為：</p>
+<blockquote>
+<p><code>A=B</code> 然後碰到 <code>&lt;IFS&gt;</code>，再執行 <code>C</code> 命令</p>
+</blockquote>
+<p>在第二次設定  A 變量時，由於空白鍵被置於 soft quote 中，因此被關閉，不再作為 IFS ：</p>
+<blockquote>
+<p><code>A=B&lt;space&gt;C</code></p>
+</blockquote>
+<p>事實上，空白鍵無論在 soft quote 還是在 hard quote 中，均會被關閉。<code>Enter</code> 鍵亦然：</p>
+<pre><code>$ A=&#39;B
+&gt; C
+&gt; &#39;$ echo&quot;$A&quot;
+B
+C
+</code></pre><p>在上例中，由於 <code>&lt;enter&gt;</code> 被置於 hard quote 當中，因此不再作為 CR 字符來處理。
+這裡的 <code>&lt;enter&gt;</code> 單純只是一個斷行符號 (new-line) 而已，由於 command line 並沒得到 CR 字符，
+因此進入第二個 shell prompt (PS2，以 <code>&gt;</code> 符號表示)，command line 並不會結束，
+直到第三行，我們輸入的 <code>&lt;enter&gt;</code> 並不在  hard quote 裡面，因此並沒被關閉，
+此時，command line 碰到 CR 字符，於是結束、交給 shell 來處理。</p>
+<p>上例的 <code>&lt;enter&gt;</code> 要是被置於 soft quote 中的話， CR 也會同樣被關閉：</p>
+<pre><code>$ A=&quot;B
+&gt; C
+&gt; &quot;
+$ echo $A
+B C
+</code></pre><p>然而，由於 <code>echo $A</code> 時的變量沒至於 soft quote 中，因此當變量替換完成後並作命令行重組時，<code>&lt;enter&gt;</code> 會被解釋為 IFS ，而不是解釋為 New Line 字符。</p>
+<p>同樣的，用 escape 亦可關閉 CR 字符：</p>
+<pre><code>$ A=B\
+&gt; C\
+&gt;
+$ echo $A
+BC
+</code></pre><p>上例中，第一個 <code>&lt;enter&gt;</code> 跟第二個 <code>&lt;enter&gt;</code> 均被 escape 字符關閉了，因此也不作為 CR 來處理，
+但第三個 <code>&lt;enter&gt;</code> 由於沒被跳脫，因此作為 CR 結束 command line 。
+但由於 <code>&lt;enter&gt;</code> 鍵本身在 shell meta 中的特殊性，在 <code>\</code> 跳脫後面，僅僅取消其 CR 功能，而不會保留其 IFS 功能。</p>
+<p>您或許發現光是一個 <code>&lt;enter&gt;</code> 鍵所產生的字符就有可能是如下這些可能：</p>
+<ul>
+<li>CR</li>
+<li>IFS</li>
+<li>NL(New Line)</li>
+<li>FF(Form Feed)</li>
+<li>NULL</li>
+<li>...</li>
+</ul>
+<p>至於甚麼時候會解釋為甚麼字符，這個我就沒去深挖了，或是留給讀者諸君自行慢慢摸索了... ^_^</p>
+<p>至於 soft quote 跟 hard quote 的不同，主要是對於某些 <code>meta</code> 的關閉與否，以 <code>$</code> 來作說明：</p>
+<pre><code>$ A=B\ C
+$ echo &quot;$A&quot;
+B C
+$ echo &#39;$A&#39;
+$A
+</code></pre><p>在第一個 <code>echo</code> 命令行中，<code>$</code> 被置於 soft quote 中，將不被關閉，因此繼續處理變量替換，
+因此 <code>echo</code> 將 <code>A</code> 的變量值輸出到熒幕，也就得到  <code>B C</code> 的結果。
+在第二個 <code>echo</code> 命令行中，<code>$</code> 被置於 hard quote 中，則被關閉，因此 <code>$</code> 只是一個 <code>$</code> 符號，
+並不會用來作變量替換處理，因此結果是 <code>$</code> 符號後面接一個 <code>A</code> 字母：<code>$A</code> 。</p>
+<p>練習與思考：如下結果為何不同？</p>
+<pre><code>$ A=B\ C
+$ echo &#39;&quot;$A&quot;&#39;        # 最外面的是單引號
+&quot;$A&quot;
+$ echo &quot;&#39;$A&#39;&quot;        # 最外面的是雙引號
+&#39;B C&#39;
+</code></pre><p>(提示：單引號及雙引號，在 quoting 中均被關閉了。)</p>
+<p>在 CU 的 shell 版裡，我發現有很多初學者的問題，都與 quoting 理解的有關。
+比方說，若我們在 <code>awk</code> 或 <code>sed</code> 的命令參數中調用之前設定的一些變量時，常會問及為何不能的問題。
+要解決這些問題，關鍵點就是：</p>
+<blockquote>
+<p>區分出 shell meta 與 command meta </p>
+</blockquote>
+<p>前面我們提到的那些 <code>meta</code> ，都是在 command line 中有特殊用途的，
+比方說 <code>{}</code> 是將其內一系列 command line 置於不具名的函式中執行(可簡單視為 command block)，
+但是，<code>awk</code> 卻需要用 <code>{}</code> 來區分出 <code>awk</code> 的命令區段(BEGIN, MAIN, END)。
+若你在 command line 中如此輸入：</p>
+<pre><code>$ awk {print $0} 1.txt
+</code></pre><p>由於  <code>{}</code> 在 shell 中並沒關閉，那 shell 就將 <code>{print $0}</code> 視為 command block ，
+但同時又沒有 &quot;<code>;</code>&quot; 符號作命令區隔，因此就出現 <code>awk</code> 的語法錯誤結果。</p>
+<p>要解決之，可用 hard quote ：</p>
+<pre><code>$ awk &#39;{print $0}&#39; 1.txt
+</code></pre><p>上面的 hard quote 應好理解，就是將原本的 <code>{</code>、<code>&lt;space&gt;</code>、<code>$</code>(註三)、<code>}</code> 這幾個 shell meta 關閉，
+避免掉在 shell 中遭到處理，而完整的成為 <code>awk</code> 參數中的 command meta 。  </p>
+<blockquote>
+<p>( 註三：而其中的 <code>$0</code> 是 <code>awk</code> 內建的 field number ，而非 <code>awk</code> 的變量，
+<code>awk</code> 自身的變量無需使用 <code>$</code> 。)</p>
+</blockquote>
+<p>要是理解了 hard quote 的功能，再來理解 soft quote 與 escape 就不難：</p>
+<pre><code>awk &quot;{print \$0}&quot; 1.txt
+awk \{print\ \$0\} 1.txt
+</code></pre><p>然而，若你要改變 <code>awk</code> 的 <code>$0</code> 的 <code>0</code> 值是從另一個 shell 變量讀進呢？<br>比方說：已有變量 <code>$A</code> 的值是 <code>0</code> ，那如何在 command line 中解決 <code>awk</code> 的 <code>$$A</code> 呢？<br>你可以很直接否定掉 hard quoe 的方案：</p>
+<pre><code>$ awk &#39;{print $$A}&#39; 1.txt
+</code></pre><p>那是因為 <code>$A</code> 的 <code>$</code> 在 hard quote 中是不能替換變量的。</p>
+<p>聰明的讀者(如你!)，經過本章學習，我想，應該可以解釋為何我們可以使用如下操作了吧：</p>
+<pre><code>A=0
+awk &quot;{print \$$A}&quot; 1.txt
+awk \{print\ \$$A\} 1.txt
+awk &#39;{print $&#39;$A&#39;}&#39; 1.txt
+awk &#39;{print $&#39;&quot;$A&quot;&#39;}&#39; 1.txt     # 注：&quot;$A&quot; 包在 soft quote 中
+</code></pre><p>或許，你能舉出更多的方案呢....  ^_^</p>
+<p>練習與思考：請運用本章學到的知識分析如下兩串討論：</p>
+<ul>
+<li><a href="http://bbs.chinaunix.net/forum/viewtopic.php?t=207178">http://bbs.chinaunix.net/forum/viewtopic.php?t=207178</a></li>
+<li><a href="http://bbs.chinaunix.net/forum/viewtopic.php?t=207178">http://bbs.chinaunix.net/forum/viewtopic.php?t=216729</a></li>
+</ul>
+</section></article><article id="Q5"><h1><span class="number">Q5.</span><span class="title"> <code>var=value</code>？<code>export</code> 前後差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=5#pid1544391">#</a></h1><section><p>這次讓我們暫時丟開 command line ，先來了解一下 bash 變量 (variable) 吧...</p>
+<p>所謂的變量，就是利用一個特定的 &quot;名稱&quot;(name)來存取一段可以變化的 &quot;值&quot;(value)。</p>
+<p><strong> 設定(set)</strong></p>
+<p>在 bash 中，你可以用 &quot;=&quot; 來設定或重新定義變量的內容：</p>
+<blockquote>
+<p>name=value</p>
+</blockquote>
+<p>在設定變量的時侯，得遵守如下規則：</p>
+<ul>
+<li>等號左右兩邊不能使用區隔符號(IFS)，也應避免使用 shell 的保留字元(meta charactor)。</li>
+<li>變量名稱不能使用 <code>$</code> 符號。</li>
+<li>變量名稱的第一個字母不能是數字(number)。</li>
+<li>變量名稱長度不可超過 256 個字母。</li>
+<li>變量名稱及變量值之大小寫是有區別的(case sensitive)。</li>
+</ul>
+<p>如下是一些變量設定時常見的錯誤：</p>
+<ul>
+<li><code>A= B</code>        ：不能有 IFS</li>
+<li><code>1A=B</code>        ：不能以數字開頭</li>
+<li><code>$A=B</code>        ：名稱不能有 $</li>
+<li><code>a=B</code>         ：這跟 a=b 是不同的（這不是錯誤，提醒 windows 的使用者要特別注意）</li>
+</ul>
+<p>如下則是可以接受的設定：</p>
+<ul>
+<li><code>A=&quot;B&quot;</code>      ：IFS 被關閉了 (請參考前面的 quoting 章節)</li>
+<li><code>A1=B</code>        ：並非以數字開頭</li>
+<li><code>A=$B</code>        ：<code>$</code> 可用在變量值內</li>
+<li><code>This_Is_A_Long_Name=b</code>        ：可用 <code>_</code> 連接較長的名稱或值，且大小寫有別。</li>
+</ul>
+<p><strong> 變量替換(substitution)</strong></p>
+<p>Shell 之所以強大，其中的一個因素是它可以在命令行中對變量作替換 (substitution) 處理。
+在命令行中使用者可以使用 <code>$</code> 符號加上變量名稱(除了在用 <code>=</code> 號定義變量名稱之外)，
+將變量值給替換出來，然後再重新組建命令行。
+比方：</p>
+<pre><code>$ A=ls
+$ B=la
+$ C=/tmp
+$ $A -$B $C
+</code></pre><blockquote>
+<p>(注意：以上命令行的第一個 <code>$</code> 是 shell prompt ，並不在命令行之內。)</p>
+</blockquote>
+<p>必需強調的是，我們所提的變量替換，只發生在 command line 上面。(是的，讓我們再回到 command line 吧﹗)
+仔細分析最後那行 command line ，不難發現在被執行之前(在輸入 CR 字符之前)，
+<code>$</code> 符號會對每一個變量作替換處理(將變量值替換出來再重組命令行)，最後會得出如下命令行：</p>
+<pre><code>ls -la /tmp
+</code></pre><p>還記得第二章我請大家 &quot;務必理解&quot; 的那兩句嗎？若你忘了，那我這裡再重貼一遍：
+若從技術細節來看，shell 會依據 IFS(Internal Field Seperator) 將 command line 所輸入的文字給拆解為 &quot;字段&quot;(word)。 
+然後再針對特殊字符 (<code>meta</code>) 先作處理，最後再重組整行 command line 。</p>
+<p>這裡的 <code>$</code> 就是 command line 中最經典的 <code>meta</code> 之一了，就是作變量替換的﹗<br>在日常的 shell 操作中，我們常會使用 <code>echo</code> 命令來查看特定變量的值，例如：</p>
+<pre><code>$ echo $A -$B $C
+</code></pre><p>我們已學過， <code>echo</code> 命令只單純將其 argument 送至 &quot;標準輸出&quot;(STDOUT，通常是我們的熒幕)。<br>所以上面的命令會在熒幕上得到如下結果：</p>
+<pre><code>ls -la /tmp
+</code></pre><p>這是由於 <code>echo</code> 命令在執行時，會先將 <code>$A</code>(<code>ls</code>)、<code>$B</code>(<code>la</code>)、跟 <code>$C</code>(<code>/tmp</code>) 給替換出來的結果。</p>
+<p>利用 shell 對變量的替換處理能力，我們在設定變量時就更為靈活了：</p>
+<pre><code>A=B
+B=$A
+</code></pre><p>這樣，<code>B</code> 的變量值就可繼承 <code>A</code> 變量 &quot;當時&quot; 的變量值了。<br>不過，不要以 &quot;數學羅輯&quot; 來套用變量的設定，比方說：</p>
+<pre><code>A=B
+B=C
+</code></pre><p>這樣並不會讓 <code>A</code> 的變量值變成 <code>C</code> 。再如：</p>
+<pre><code>A=B
+B=$A
+A=C
+</code></pre><p>同樣也不會讓 <code>B</code> 的值換成 <code>C</code> 。<br>上面是單純定義了兩個不同名稱的變量：<code>A</code> 與  <code>B</code> ，它們的值分別是 <code>B</code> 與  <code>C</code> 。<br>若變量被重復定義的話，則原有舊值將被新值所取代。(這不正是 &quot;可變的量&quot; 嗎？  ^_^)<br>當我們在設定變量的時侯，請記著這點：</p>
+<blockquote>
+<p>用一個名稱儲存一個數值</p>
+</blockquote>
+<p>僅此而已。</p>
+<p>此外，我們也可利用命令行的變量替換能力來 &quot;擴充&quot;(append)變量值：</p>
+<pre><code>A=B:C:D
+A=$A:E
+</code></pre><p>這樣，第一行我們設定 <code>A</code> 的值為 &quot;<code>B:C:D</code>&quot;，然後，第二行再將值擴充為 &quot;<code>B:C:D:E</code>&quot; 。
+上面的擴充範例，我們使用區隔符號 (<code>:</code>) 來達到擴充目的，
+要是沒有區隔符號的話，如下是有問題的：</p>
+<pre><code>A=BCD
+A=$AE
+</code></pre><p>因為第二次是將 <code>A</code> 的值繼承 <code>$AE</code> 的提換結果，而非 <code>$A</code> 再加 <code>E</code> ﹗
+要解決此問題，我們可用更嚴謹的替換處理：</p>
+<pre><code>A=BCD
+A=${A}E
+</code></pre><p>上例中，我們使用 <code>{}</code> 將變量名稱的範圍給明確定義出來，
+如此一來，我們就可以將 <code>A</code> 的變量值從 <code>BCD</code> 給擴充為 <code>BCDE</code> 。</p>
+<blockquote>
+<p>(提示：關於 ${name} 事實上還可做到更多的變量處理能力，這些均屬於比較進階的變量處理，
+現階段暫時不介紹了，請大家自行參考資料。如 CU 的貼子：
+<a href="http://www.chinaunix.net/forum/viewtopic.php?t=201843">http://www.chinaunix.net/forum/viewtopic.php?t=201843</a>
+)</p>
+</blockquote>
+<p><strong> <code>export</code> </strong></p>
+<p>嚴格來說，我們在當前 shell 中所定義的變量，均屬於 &quot;本地變量&quot;(local variable)，
+只有經過 export 命令的 &quot;輸出&quot; 處理，才能成為環境變量(environment variable)：</p>
+<pre><code>$ A=B
+$ export A
+</code></pre><p>或：</p>
+<pre><code>$ export A=B
+</code></pre><p>經過 export 輸出處理之後，變量 <code>A</code> 就能成為一個環境變量供其後的命令使用。<br>在使用 export  的時侯，請別忘記 shell 在命令行對變量的 &quot;替換&quot;(substitution)處理，
+比方說：</p>
+<pre><code>$ A=B
+$ B=C
+$ export $A
+</code></pre><p>上面的命令並未將 <code>A</code> 輸出為環境變量，而是將 <code>B</code> 作輸出，
+這是因為在這個命令行中，<code>$A</code> 會首先被替換為 <code>B</code>， 然後再 &quot;塞回&quot; 作 <code>export</code> 的參數。</p>
+<p>要理解這個 <code>export</code> ，事實上需要從 process 的角度來理解才能透徹。
+我將於下一章為大家說明 process 的觀念，敬請留意。</p>
+<p><strong> 取消變量 </strong></p>
+<p>要取消一個變量，在 bash 中可使用 <code>unset</code> 命令來處理：</p>
+<pre><code>unset A
+</code></pre><p>與 <code>export</code> 一樣，<code>unset</code> 命令行也同樣會作變量替換(這其實就是 shell 的功能之一)，
+因此：</p>
+<pre><code>$ A=B
+$ B=C
+$ unset $A
+</code></pre><p>事實上所取消的變量是 <code>B</code> 而不是 <code>A</code> 。</p>
+<p>此外，變量一旦經過 <code>unset</code> 取消之後，其結果是將整個變量拿掉，而不僅是取消其變量值。
+如下兩行其實是很不一樣的：</p>
+<pre><code>$ A=
+$ unset A
+</code></pre><p>第一行只是將變量 <code>A</code> 設定為 &quot;空值&quot;(null  value)，但第二行則讓變量 <code>A</code> 不再存在。
+雖然用眼睛來看，這兩種變量狀態在如下命令結果中都是一樣的：</p>
+<pre><code>$ A=
+$ echo $A
+
+$ unset A
+$ echo $A
+</code></pre><p>請學員務必能識別 <code>null value</code> 與 <code>unset</code> 的本質區別，這在一些進階的變量處理上是很嚴格的。
+比方說：</p>
+<pre><code>$ str=                # 設為 null
+$ var=${str=expr}     # 定義 var
+$ echo $var
+
+$ echo $str
+
+$ unset str           # 取消
+$ var=${str=expr}     # 定義 var
+$ echo $var
+expr
+$ echo $str
+expr
+</code></pre><p>聰明的讀者(yes, you!)，稍加思考的話，
+應該不難發現為何同樣的 <code>var=${str=expr}</code> 在 <code>null</code> 與 <code>unset</code> 之下的不同吧？
+若你看不出來，那可能是如下原因之一：</p>
+<ul>
+<li>a. 你太笨了</li>
+<li>b. 不了解  <code>var=${str=expr}</code>        這個進階處理</li>
+<li>c. 對本篇說明還沒來得及消化吸收</li>
+<li>d. 我講得不好</li>
+</ul>
+<p>不知，你選哪個呢？....  ^_^</p>
+</section></article><article id="Q6"><h1><span class="number">Q6.</span><span class="title"> <code>exec</code> 跟 <code>source</code> 差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=6#pid1583329">#</a></h1><section><p>這次先讓我們從 CU Shell 版的一個實例貼子來談起吧：
+(論壇改版後原連結已經失效)</p>
+<p>例中的提問原文如下：</p>
+<blockquote>
+<p><code>cd /etc/aa/bb/cc</code> 可以執行<br>但是把這條命令寫入 shell 時 shell 不執行！<br>這是什么原因呀！</p>
+<p>（意思是：運行腳本後并沒有移到 <code>/etc/aa/bb/cc</code> 目錄）</p>
+</blockquote>
+<p>我當時如何回答暫時別去深究，先讓我們了解一下行程 (process) 的觀念好了。<br>首先，我們所執行的任何程式，都是由父行程 (parent process) 所產生出來的一個子行程(child process)，
+子行程在結束後，將返回到父行程去。此一現像在 Linux 系統中被稱為 <code>fork</code> 。<br>(為何要程為 <code>fork</code> 呢？嗯，畫一下圖或許比較好理解...  ^_^)<br>當子行程被產生的時候，將會從父行程那裡獲得一定的資源分配、及 (更重要的是) 繼承父行程的環境﹗<br>讓我們回到上一章所談到的 &quot;環境變量&quot; 吧：</p>
+<blockquote>
+<p>所謂環境變量其實就是那些會傳給子行程的變量。</p>
+</blockquote>
+<p>簡單而言，&quot;遺傳性&quot; 就是區分本地變量與環境變量的決定性指標。<br>然而，從遺傳的角度來看，我們也不難發現環境變量的另一個重要特徵：</p>
+<blockquote>
+<p>環境變量只能從父行程到子行程單向繼承。換句話說：在子行程中的環境如何變更，均不會影響父行程的環境。</p>
+</blockquote>
+<p>接下來，再讓我們了解一下命令腳本 (shell script) 的概念。<br>所謂的 shell script 講起來很簡單，就是將你平時在 shell prompt 後所輸入的多行 command line 依序寫入一個文件去而已。<br>其中再加上一些條件判斷、互動界面、參數運用、函數調用等等技巧，得以讓 script 更加 &quot;聰明&quot; 的執行，
+但若撇開這些技巧不談，我們真的可以簡單的看成 script 只不過依次執行預先寫好的命令行而已。</p>
+<p>再結合以上兩個概念(process + script)，那應該就不難理解如下這句話的意思了：</p>
+<blockquote>
+<p>正常來說，當我們執行一個 shell script 時，其實是先產生一個 sub-shell 的子行程，然後 sub-shell 再去產生命令行的子行程。</p>
+</blockquote>
+<p>然則，那讓我們回到本章開始時所提到的例子再從新思考：</p>
+<blockquote>
+<p><code>cd /etc/aa/bb/cc</code> 可以執行<br>但是把這條命令寫入 shell 時 shell 不執行！<br>這是什么原因呀！</p>
+</blockquote>
+<p>我當時的答案是這樣的：</p>
+<blockquote>
+<p>因為，一般我們跑的 shell script 是用 subshell 去執行的。<br>從 process 的觀念來看，是 parent process 產生一個 child process 去執行，<br>當 child 結束後，會返回 parent ，但 parent 的環境是不會因 child 的改變而改變的。<br>所謂的環境元數很多，凡舉 effective id, variable, workding dir 等等...<br>其中的 workding dir (<code>$PWD</code>) 正是樓主的疑問所在：<br>當用 subshell 來跑 script 的話，sub shell 的 <code>$PWD</code> 會因為 <code>cd</code> 而變更，<br>但當返回 primary shell 時，<code>$PWD</code> 是不會變更的。  </p>
+</blockquote>
+<p>能夠了解問題的原因及其原理是很好的，但是？如何解決問題恐怕是我們更感興趣的﹗是吧？^_^<br>那好，接下來，再讓我們了解一下 source 命令好了。<br>當你有了 <code>fork</code> 的概念之後，要理解 source 就不難：</p>
+<blockquote>
+<p>所謂 source 就是讓 script 在當前 shell 內執行、而不是產生一個 sub-shell 來執行。</p>
+</blockquote>
+<p>由於所有執行結果均於當前 shell 內完成，若 script 的環境有所改變，當然也會改變當前環境了﹗<br>因此，只要我們將原本單獨輸入的 script 命令行變成 source 命令的參數，就可輕易解決前例提到的問題了。<br>比方說，原本我們是如此執行  script 的：</p>
+<pre><code>./my.script
+</code></pre><p>現在改成這樣即可：</p>
+<pre><code>source ./my.script
+或：
+. ./my.script
+</code></pre><p>說到這裡，我想，各位有興趣看看 <code>/etc</code> 底下的眾多設定文件，
+應該不難理解它們被定議後，如何讓其他 script 讀取並繼承了吧？<br>若然，日後你有機會寫自己的 script ，應也不難專門指定一個設定文件以供不同的 script 一起 &quot;共用&quot; 了...  ^_^  </p>
+<p>okay，到這裡，若你搞得懂 <code>fork</code> 與 <code>source</code> 的不同，那接下來再接受一個挑戰：<br>---- 那 <code>exec</code> 又與 <code>source/fork</code> 有何不同呢？<br>哦... 要了解 exec 或許較為複雜，尤其扯上 File Descriptor 的話...<br>不過，簡單來說：</p>
+<blockquote>
+<p><code>exec</code> 也是讓 script 在同一個行程上執行，但是原有行程則被結束了。</p>
+</blockquote>
+<p>也就是簡而言之：原有行程會否終止，就是 <code>exec</code> 與 <code>source/fork</code> 的最大差異了。</p>
+<p>嗯，光是從理論去理解，或許沒那麼好消化，不如動手 &quot;實作 + 思考&quot; 來的印象深刻哦。<br>下面讓我們寫兩個簡單的 script ，分別命名為 <code>1.sh</code> 及 <code>2.sh</code> ：</p>
+<pre><code>1.sh 
+
+#!/bin/bash 
+A=B 
+echo &quot;PID for 1.sh before exec/source/fork:$$&quot;
+export A
+echo &quot;1.sh: \$A is $A&quot;
+case $1 in
+        exec)
+                echo &quot;using exec...&quot;
+                exec ./2.sh ;;
+        source)
+                echo &quot;using source...&quot;
+                . ./2.sh ;;
+        *)
+                echo &quot;using fork by default...&quot;
+                ./2.sh ;;
+esac
+echo &quot;PID for 1.sh after exec/source/fork:$$&quot;
+echo &quot;1.sh: \$A is $A&quot;
+
+
+2.sh 
+
+#!/bin/bash
+echo &quot;PID for 2.sh: $$&quot;
+echo &quot;2.sh get \$A=$A from 1.sh&quot;
+A=C
+export A
+echo &quot;2.sh: \$A is $A&quot;
+</code></pre><p>然後，分別跑如下參數來觀察結果：</p>
+<pre><code>$ ./1.sh fork
+$ ./1.sh source
+$ ./1.sh exec
+</code></pre><p>或是，你也可以參考 CU 上的另一貼子：<br><a href="http://www.chinaunix.net/forum/viewtopic.php?t=191051">http://www.chinaunix.net/forum/viewtopic.php?t=191051</a><br>好了，別忘了仔細比較輸出結果的不同及背後的原因哦...<br>若有疑問，歡迎提出來一起討論討論~~~</p>
+<p>happy scripting! ^_^</p>
+</section></article><article id="Q7"><h1><span class="number">Q7.</span><span class="title"> <code>()</code> 與 <code>{}</code> 差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=6#pid1595135">#</a></h1><section><p>嗯，這次輕鬆一下，不講太多...  ^_^</p>
+<p>先說一下，為何要用 <code>()</code> 或 <code>{}</code> 好了。<br>許多時候，我們在 shell 操作上，需要在一定條件下一次執行多個命令，<br>也就是說，要麼不執行，要麼就全執行，而不是每次依序的判斷是否要執行下一個命令。<br>或是，需要從一些命令執行優先次順中得到豁免，如算術的 <code>2*(3+4)</code> 那樣...<br>這時候，我們就可引入 &quot;命令群組&quot;(command group)的概念：將多個命令集中處理。  </p>
+<p>在 shell command line 中，一般人或許不太計較 <code>()</code> 與 <code>{}</code> 這兩對符號的差異，<br>雖然兩者都可將多個命令作群組化處理，但若從技術細節上，卻是很不一樣的： </p>
+<ul>
+<li><code>( )</code> 將 command group 置於 sub-shell 去執行，也稱 nested sub-shell。  </li>
+<li><code>{ }</code> 則是在同一個 shell 內完成，也稱為 non-named command group。  </li>
+</ul>
+<p>若，你對上一章的 <code>fork</code> 與 <code>source</code> 的概念還記得了的話，那就不難理解兩者的差異了。<br>要是在 command group 中扯上變量及其他環境的修改，我們可以根據不同的需求來使用 <code>()</code> 或 <code>{}</code> 。<br>通常而言，若所作的修改是臨時的，且不想影響原有或以後的設定，那我們就 nested sub-shell ，<br>反之，則用 non-named command group 。  </p>
+<p>是的，光從 command line 來看，<code>()</code> 與 <code>{}</code> 的差別就講完了，夠輕鬆吧~~~  ^<em>^<br>然而，若這兩個 <code>meta</code> 用在其他 command meta 或領域中(如 Regular Expression)，還是有很多差別的。<br>只是，我不打算再去說明了，留給讀者自己慢慢發掘好了...<br>我這裡只想補充一個概念，就是 <code>function</code> 。
+所謂的 <code>function</code> ，就是用一個名字去命名一個 command group ，然後再調用這個名字去執行 command group 。
+從 non-named command group 來推斷，大概你也可以猜到我要說的是 <code>{}</code> 了吧？(yes! 你真聰明﹗  ^</em>^)</p>
+<p>在 bash 中，<code>function</code> 的定義方式有兩種：</p>
+<p>方式一：</p>
+<pre><code>function function_name {
+  command1
+  command2
+  command3
+  ....
+}
+</code></pre><p>方式二：</p>
+<pre><code>fuction_name () {
+    command1
+    command2
+    command3
+    ....
+}
+</code></pre><p>用哪一種方式無所謂，只是若碰到所定意的名稱與現有的命令或別名 (Alias) 衝突的話，方式二或許會失敗。<br>但方式二起碼可以少打 <code>function</code> 這一串英文字母，對懶人來說(如我)，又何樂不為呢？...  ^_^</p>
+<p><code>function</code> 在某一程度來說，也可稱為 &quot;函式&quot;，但請不要與傳統編程所使用的函式 (<code>library</code>) 搞混了，畢竟兩者差異很大。
+惟一相同的是，我們都可以隨時用 &quot;已定義的名稱&quot; 來調用它們...
+若我們在 shell 操作中，需要不斷的重覆執行某些命令，我們首先想到的，或許是將命令寫成命令稿(shell script)。
+不過，我們也可以寫成 <code>function</code> ，然後在 command line 中打上 function_name 就可當一舨的 script 來使用了。
+只是若你在 shell 中定義的 <code>function</code> ，除了可用 <code>unset function_name</code> 取消外，一旦退出 shell ，<code>function</code> 也跟著取消。 
+然而，在 script 中使用 <code>function</code> 卻有許多好處，除了可以提高整體 script 的執行效能外(因為已被載入)，
+還可以節省許多重覆的代碼...</p>
+<p>簡單而言，若你會將多個命令寫成 script 以供調用的話，那，你可以將 <code>function</code> 看成是 script 中的 script ...  ^<em>^
+而且，透過上一章介紹的 <code>source</code> 命令，我們可以自行定義許許多多好用的 <code>function</code> ，再集中寫在特定文件中，
+然後，在其他的 script 中用 <code>source</code> 將它們載入並反覆執行。
+若你是 RedHat Linux 的使用者，或許，已經猜得出 <code>/etc/rc.d/init.d/functions</code> 這個文件是作啥用的了~~~  ^</em>^  </p>
+<p>okay，說要輕鬆點的嘛，那這次就暫時寫到這吧。祝大家學習愉快﹗  ^_^</p>
+</section></article><article id="Q8"><h1><span class="number">Q8.</span><span class="title"> <code>$(())</code> 與 <code>$()</code> 還有 <code>${}</code> 差在哪？ </span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=7#pid1617953">#</a></h1><section><p>我們上一章介紹了 <code>()</code> 與 <code>{}</code> 的不同，這次讓我們擴展一下，看看更多的變化：<code>$()</code> 與 <code>${}</code> 又是啥玩意兒呢？</p>
+<p>在 bash shell 中，<code>$()</code> 與 ` ` (反引號) 都是用來做命令替換用 (command substitution) 的。<br>所謂的命令替換與我們第五章學過的變量替換差不多，都是用來重組命令行：</p>
+<blockquote>
+<p>完成引號裡的命令行，然後將其結果替換出來，再重組命令行。</p>
+</blockquote>
+<p>例如：</p>
+<pre><code>$ echo the last sunday is $(date -d &quot;last sunday&quot; +%Y-%m-%d)
+</code></pre><p>如此便可方便得到上一星期天的日期了... ^_^</p>
+<p>在操作上，用 <code>$()</code> 或 ` ` 都無所謂，只是我 &quot;個人&quot; 比較喜歡用 <code>$()</code> ，理由是：</p>
+<p>1,  ` ` 很容易與 &#39; &#39; (單引號)搞混亂，尤其對初學者來說。
+有時在一些奇怪的字形顯示中，兩種符號是一模一樣的(直豎兩點)。
+當然了，有經驗的朋友還是一眼就能分辯兩者。只是，若能更好的避免混亂，又何樂不為呢？ ^_^</p>
+<p>2, 在多層次的復合替換中，` ` 須要額外的跳脫 (\`) 處理，而 <code>$( )</code> 則比較直觀。例如：
+這是錯的：</p>
+<pre><code>command1 `command2 `command3` `
+</code></pre><p>原本的意圖是要在 command2 `command3` 先將 <code>command3</code> 提換出來給 <code>command2</code> 處理，<br>然後再將結果傳給 command1 `command2 ...` 來處理。<br>然而，真正的結果在命令行中卻是分成了 <code>command2</code> 與 `` 兩段。<br>正確的輸入應該如下：</p>
+<pre><code>command1 `command2 \`command3\` `
+</code></pre><p>要不然，換成 <code>$( )</code> 就沒問題了：</p>
+<pre><code>command1 $(command2 $(command3))
+</code></pre><p>只要你喜歡，做多少層的替換都沒問題啦~~~  ^_^</p>
+<p>不過，<code>$( )</code> 並不是沒有斃端的...
+首先，` ` 基本上可用在全部的 unix shell 中使用，若寫成 shell script ，其移植性比較高。<br>而 <code>$( )</code> 並不見的每一種 shell 都能使用，我只能跟你說，若你用 bash2 的話，肯定沒問題...  ^_^</p>
+<p>接下來，再讓我們看 <code>${ }</code> 吧... 它其實就是用來作變量替換用的啦。<br>一般情況下，<code>$var</code> 與 <code>${var}</code> 並沒有啥不一樣。<br>但是用 <code>${ }</code> 會比較精確的界定變量名稱的範圍，比方說：</p>
+<pre><code>$ A=B
+$ echo $AB
+</code></pre><p>原本是打算先將 <code>$A</code> 的結果替換出來，然後再補一個 <code>B</code> 字母於其後，<br>但在命令行上，真正的結果卻是只會提換變量名稱為 <code>AB</code> 的值出來...<br>若使用 <code>${ }</code> 就沒問題了：</p>
+<pre><code>$ echo ${A}B
+BB
+</code></pre><p>不過，假如你只看到 <code>${ }</code> 只能用來界定變量名稱的話，那你就實在太小看 bash 了﹗<br>有興趣的話，你可先參考一下 cu 本版的精華文章：<br><a href="http://www.chinaunix.net/forum/viewtopic.php?t=201843">http://www.chinaunix.net/forum/viewtopic.php?t=201843</a></p>
+<p>為了完整起見，我這裡再用一些例子加以說明 <code>${}</code> 的一些特異功能：&gt; 假設我們定義了一個變量為：    </p>
+<blockquote>
+<p><code>file=/dir1/dir2/dir3/my.file.txt</code><br>我們可以用 <code>${}</code> 分別替換獲得不同的值：&gt; <code>${file#*/}</code>：拿掉第一條 <code>/</code> 及其左邊的字串：<code>dir1/dir2/dir3/my.file.txt</code><br><code>${file##*/}</code>：拿掉最後一條 <code>/</code> 及其左邊的字串：<code>my.file.txt</code><br><code>${file#*.}</code>：拿掉第一個 <code>.</code>  及其左邊的字串：<code>file.txt</code><br><code>${file##*.}</code>：拿掉最後一個 <code>.</code>  及其左邊的字串：<code>txt</code><br><code>${file%/*}</code>：拿掉最後條 <code>/</code> 及其右邊的字串：<code>/dir1/dir2/dir3</code><br><code>${file%%/*}</code>：拿掉第一條 <code>/</code> 及其右邊的字串：<code>(空值)</code><br><code>${file%.*}</code>：拿掉最後一個 <code>.</code>  及其右邊的字串：<code>/dir1/dir2/dir3/my.file</code><br><code>${file%%.*}</code>：拿掉第一個 <code>.</code>  及其右邊的字串：<code>/dir1/dir2/dir3/my</code>  </p>
+<p>記憶的方法為：<br><code>#</code> 是去掉左邊(在鑑盤上 <code>#</code> 在 <code>$</code> 之左邊)<br><code>%</code> 是去掉右邊(在鑑盤上 <code>%</code> 在 <code>$</code> 之右邊)<br>單一符號是最小匹配﹔兩個符號是最大匹配。  </p>
+<p><code>${file:0:5}</code>：提取最左邊的 <code>5</code> 個字節：<code>/dir1</code><br><code>${file:5:5}</code>：提取第 <code>5</code> 個字節右邊的連續 <code>5</code> 個字節：<code>/dir2</code>  </p>
+<p>我們也可以對變量值裡的字串作替換：<br><code>${file/dir/path}</code>：將第一個 <code>dir</code> 提換為 <code>path：/path1/dir2/dir3/my.file.txt</code><br><code>${file//dir/path}</code>：將全部 <code>dir</code> 提換為 <code>path：/path1/path2/path3/my.file.txt</code>  </p>
+<p>利用 <code>${}</code> 還可針對不同的變數狀態賦值(沒設定、空值、非空值)：<br><code>${file-my.file.txt}</code> ：假如 <code>$file</code> 沒有設定，則使用 <code>my.file.txt</code> 作傳回值。(空值及非空值時不作處理)<br><code>${file:-my.file.txt}</code> ：假如 <code>$file</code> 沒有設定或為空值，則使用 <code>my.file.txt</code> 作傳回值。 (非空值時不作處理)<br><code>${file+my.file.txt}</code> ：假如 <code>$file</code> 設為空值或非空值，均使用 <code>my.file.txt</code> 作傳回值。(沒設定時不作處理)<br><code>${file:+my.file.txt}</code> ：若 <code>$file</code> 為非空值，則使用 <code>my.file.txt</code> 作傳回值。 (沒設定及空值時不作處理)<br><code>${file=my.file.txt}</code> ：若 <code>$file</code> 沒設定，則使用 <code>my.file.txt</code> 作傳回值，同時將 <code>$file</code> 賦值為 <code>my.file.txt</code> 。 (空值及非空值時不作處理)<br><code>${file:=my.file.txt}</code> ：若 <code>$file</code> 沒設定或為空值，則使用 <code>my.file.txt</code> 作傳回值，同時將 <code>$file</code> 賦值為 <code>my.file.txt</code> 。 (非空值時不作處理)<br><code>${file?my.file.txt}</code> ：若 <code>$file</code> 沒設定，則將 <code>my.file.txt</code> 輸出至 STDERR。 (空值及非空值時不作處理)<br><code>${file:?my.file.txt}</code> ：若 <code>$file</code> 沒設定或為空值，則將 <code>my.file.txt</code> 輸出至 STDERR。 (非空值時不作處理)  </p>
+<p>tips:<br>以上的理解在於, 你一定要分清楚 <code>unset</code> 與 <code>null</code> 及 <code>non-null</code> 這三種賦值狀態.<br>一般而言, <code>:</code> 與 <code>null</code> 有關, 若不帶 <code>:</code> 的話, <code>null</code> 不受影響, 若帶 <code>:</code> 則連 <code>null</code> 也受影響.  </p>
+<p>還有哦，<code>${#var}</code> 可計算出變量值的長度：<br><code>${#file}</code> 可得到 <code>27</code> ，因為 <code>/dir1/dir2/dir3/my.file.txt</code> 剛好是 <code>27</code> 個字節...  </p>
+</blockquote>
+<p>接下來，再為大家介稍一下 bash 的組數 (array) 處理方法。</p>
+<p>一般而言，<code>A=&quot;a b c def&quot;</code> 這樣的變量只是將 <code>$A</code> 替換為一個單一的字串，
+但是改為 <code>A=(a b c def)</code> ，則是將 <code>$A</code> 定義為組數...<br>bash 的組數替換方法可參考如下方法：</p>
+<pre><code>${A[@]} 或 ${A[*]}
+</code></pre><p>可得到 <code>a b c def</code> (全部組數)</p>
+<pre><code>${A[0]}
+</code></pre><p>可得到 <code>a</code> (第一個組數)，<code>${A[1]}</code> 則為第二個組數...</p>
+<pre><code>${#A[@]} 或 ${#A[*]}  
+</code></pre><p>可得到 <code>4</code> (全部組數數量)</p>
+<pre><code>${#A[0]}
+</code></pre><p>可得到 <code>1</code> (即第一個組數 (<code>a</code>) 的長度)，<code>${#A[3]}</code> 可得到 <code>3</code> (第四個組數 (<code>def</code>) 的長度)</p>
+<pre><code>A[3]=xyz  
+</code></pre><p>則是將第四個組數重新定義為 <code>xyz</code> ...</p>
+<p>諸如此類的....<br>能夠善用 bash 的 <code>$()</code> 與 <code>${}</code> 可大大提高及簡化 shell 在變量上的處理能力哦~~~  ^_^</p>
+<p>好了，最後為大家介紹 <code>$(())</code> 的用途吧：它是用來作整數運算的。<br>在 bash 中，$(()) 的整數運算符號大致有這些：</p>
+<ul>
+<li>+ - * / ：分別為 &quot;加、減、乘、除&quot;。</li>
+<li>% ：餘數運算</li>
+<li>&amp; | ^ !：分別為 &quot;AND、OR、XOR、NOT&quot; 運算。</li>
+</ul>
+<p>例：</p>
+<pre><code>$ a=5; b=7; c=2
+$ echo $((a+b*c))
+19
+$ echo $(((a+b)/c ))
+6
+$ echo $(((a*b)%c))
+1
+</code></pre><p>在 <code>$(())</code> 中的變量名稱，可於其前面加 <code>$</code> 符號來替換，也可以不用，如：</p>
+<ul>
+<li><code>$(($a + $b * $c))</code> 也可得到 <code>19</code> 的結果</li>
+</ul>
+<p>此外，<code>$(())</code> 還可作不同進位 (如二進位、八進位、十六進位) 作運算呢，只是，輸出結果皆為十進位而已：</p>
+<ul>
+<li><code>echo $((16#2a))</code> 結果為 <code>42</code> (16 進位轉十進位)</li>
+</ul>
+<p>以一個實用的例子來看看吧：<br>假如當前的  <code>umask</code> 是 <code>022</code> ，那麼新建文件的權限即為：</p>
+<pre><code>$ umask 022
+$ echo &quot;obase=8;$((8#666 &amp; (8#777 ^ 8#$(umask)) ))&quot; | bc
+644
+</code></pre><p>事實上，單純用 <code>(())</code> 也可重定義變量值，或作 testing：</p>
+<ul>
+<li><code>a=5; ((a++))</code> 可將 <code>$a</code> 重定義為 <code>6</code> </li>
+<li><code>a=5; ((a--))</code> 則為 <code>a=4</code></li>
+<li><code>a=5; b=7; ((a &lt; b))</code> 會得到  <code>0 (true)</code> 的返回值。</li>
+</ul>
+<p>常見的用於 <code>(())</code> 的測試符號有如下這些：</p>
+<ul>
+<li><code>&lt;</code>：小於</li>
+<li><code>&gt;</code>：大於</li>
+<li><code>&lt;=</code>：小於或等於</li>
+<li><code>&gt;=</code>：大於或等於</li>
+<li><code>==</code>：等於</li>
+<li><code>!=</code>：不等於</li>
+</ul>
+<p>不過，使用 <code>(())</code> 作整數測試時，請不要跟 <code>[]</code> 的整數測試搞混亂了。(更多的測試我將於第十章為大家介紹)</p>
+<p>怎樣？好玩吧..  ^_^  okay，這次暫時說這麼多...<br>上面的介紹，並沒有詳列每一種可用的狀態，更多的，就請讀者參考手冊文件囉...</p>
+</section></article><article id="Q9"><h1><span class="number">Q9.</span><span class="title"> <code>$@</code> 與 <code>$*</code> 差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=7#pid1628522">#</a></h1><section><p>要說 <code>$@</code> 與 <code>$*</code> 之前，需得先從 shell script 的 positional parameter 談起...
+我們都已經知道變量 (variable) 是如何定義及替換的，這個不用再多講了。
+但是，我們還需要知道有些變量是 shell 內定的，且其名稱是我們不能隨意修改的，
+其中就有 positional parameter 在內。</p>
+<p>在 shell script 中，我們可用 <code>$0</code>, <code>$1</code>, <code>$2</code>, <code>$3</code> ... 這樣的變量分別提取命令行中的如下部份：</p>
+<pre><code>script_name parameter1 parameter2 parameter3 ...
+</code></pre><p>我們很容易就能猜出 <code>$0</code> 就是代表 shell script 名稱 (路逕) 本身，而 <code>$1</code> 就是其後的第一個參數，如此類推....
+須得留意的是 IFS 的作用，也就是，若 IFS 被 quoting 處理後，那麼 positional parameter 也會改變。<br>如下例：</p>
+<pre><code>my.sh p1 &quot;p2 p3&quot; p4
+</code></pre><p>由於在 <code>p2</code> 與 <code>p3</code> 之間的空白鍵被 soft quote 所關閉了，因此 <code>my.sh</code> 中的 <code>$2</code> 是 <code>&quot;p2 p3&quot;</code> 而 <code>$3</code> 則是 <code>p4</code> ...</p>
+<p>還記得前兩章我們提到 <code>function</code> 時，我不是說過它是 script 中的 script 嗎？  ^_^<br>是的，<code>function</code> 一樣可以讀取自己的(有別於 script 的) postitional parameter ，惟一例外的是 <code>$0</code> 而已。<br>舉例而言：假設 <code>my.sh</code> 裡有一個 <code>function</code> 叫 <code>my_fun</code> , 若在 script 中跑 <code>my_fun fp1 fp2 fp3</code> ，
+那麼，<code>function</code> 內的 <code>$0</code> 是 <code>my.sh</code> ，而 <code>$1</code> 則是 <code>fp1</code> 而非 <code>p1</code> 了...</p>
+<p>不如寫個簡單的 my.sh script  看看吧：</p>
+<pre><code>#!/bin/bash
+
+my_fun() {
+    echo &#39;$0 inside function is&#39;$0
+    echo &#39;$1 inside function is&#39;$1
+    echo &#39;$2 inside function is&#39;$2
+}
+
+echo &#39;$0 outside function is&#39;$0
+echo &#39;$1 outside function is&#39;$1
+echo &#39;$2 outside function is&#39;$2
+
+my_fun fp1 &quot;fp2 fp3&quot;
+</code></pre><p>然後在 command line 中跑一下 script 就知道了：</p>
+<pre><code>chmod +x my.sh
+./my.sh p1 &quot;p2 p3&quot;
+$0 outside function is ./my.sh
+$1 outside function is p1
+$2 outside function is p2 p3
+$0 inside function is ./my.sh
+$1 inside function is fp1
+$2 inside function is fp2 fp3
+</code></pre><p>然而，在使用 positional parameter 的時候，我們要注意一些陷阱哦：</p>
+<ul>
+<li><code>$10</code> 不是替換第 <code>10</code> 個參數，而是替換第一個參數 (<code>$1</code>) 然後再補一個 <code>0</code> 於其後﹗</li>
+</ul>
+<p>也就是，<code>my.sh one two three four five six seven eigth nine ten</code> 這樣的 command line ，
+<code>my.sh</code> 裡的 <code>$10</code> 不是 <code>ten</code> 而是 <code>one0</code> 哦... 小心小心﹗<br>要抓到 <code>ten</code> 的話，有兩種方法：</p>
+<ul>
+<li>方法一，是使用我們上一章介紹的 <code>${}</code> ，也就是用 <code>${10}</code> 即可。</li>
+<li>方法二，就是 <code>shift</code> 了。</li>
+</ul>
+<p>用通俗的說法來說，所謂的 <code>shift</code> 就是取消 positional parameter 中最左邊的參數(<code>$0</code> 不受影響)。<br>其預設值為 <code>1</code> ，也就是 <code>shift</code> 或 <code>shift 1</code>  都是取消 <code>$1</code> ，而原本的 <code>$2</code> 則變成 <code>$1</code>、<code>$3</code> 變成 <code>$2</code> ...<br>若 <code>shift 3</code> 則是取消前面三個參數，也就是原本的 <code>$4</code> 將變成 <code>$1</code> ...<br>那，親愛的讀者，你說要 <code>shift</code> 掉多少個參數，才可用 <code>$1</code> 取得 <code>${10}</code> 呢？ ^_^  </p>
+<p>okay，當我們對 positional parameter 有了基本概念之後，那再讓我們看看其他相關變量吧。<br>首先是 <code>$#</code> ：它可抓出 positional parameter 的數量。<br>以前面的 <code>my.sh p1 &quot;p2 p3&quot;</code> 為例：<br>由於 <code>p2</code> 與 <code>p3</code> 之間的 IFS 是在 soft quote 中，因此 <code>$#</code> 可得到 <code>2</code> 的值。<br>但如果 <code>p2</code> 與 <code>p3</code> 沒有置於 quoting 中話，那 <code>$#</code> 就可得到 <code>3</code> 的值了。<br>同樣的道理在 <code>function</code> 中也是一樣的...  </p>
+<p>因此，我們常在 shell script 裡用如下方法測試 script 是否有讀進參數：</p>
+<pre><code>[$# = 0]
+</code></pre><p>假如為 <code>0</code> ，那就表示 script 沒有參數，否則就是有帶參數...</p>
+<p>接下來就是 <code>$@</code> 與 <code>$*</code> ：<br>精確來講，兩者只有在 soft quote 中才有差異，否則，都表示 &quot;全部參數&quot;(<code>$0</code> 除外)。<br>舉例來說好了：<br>若在 command line 上跑 <code>my.sh p1 &quot;p2 p3&quot; p4</code> 的話，<br>不管是 <code>$@</code> 還是 <code>$*</code> ，都可得到 <code>p1 p2 p3 p4</code> 就是了。<br>但是，如果置於 soft quote 中的話：<br>&quot;<code>$@</code>&quot; 則可得到 &quot;<code>p1</code>&quot; &quot;<code>p2 p3</code>&quot; &quot;<code>p4</code>&quot; 這三個不同的詞段(word)﹔<br>&quot;<code>$*</code>&quot; 則可得到 &quot;<code>p1 p2 p3 p4</code>&quot; 這一整串單一的詞段。  </p>
+<p>我們可修改一下前面的 <code>my.sh</code> ，使之內容如下：</p>
+<pre><code>#!/bin/bash
+
+my_fun() {echo &quot;$#&quot;}
+
+echo &#39;the number of parameter in&quot;$@&quot;is&#39;$(my_fun &quot;$@&quot;)
+echo &#39;the number of parameter in&quot;$*&quot;is&#39;$(my_fun &quot;$*&quot;)
+</code></pre><p>然後再執行 <code>./my.sh p1 &quot;p2 p3&quot; p4</code> 就知道 <code>$@</code> 與 <code>$*</code> 差在哪了 ...    ^_^</p>
+</section></article><article id="Q10"><h1><span class="number">Q10.</span><span class="title"> <code>&amp;&amp;</code> 與 <code>||</code> 差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=7#pid1634118">#</a></h1><section><p>好不容易，進入兩位數的章節了... 一路走來，很辛苦吧？也很快樂吧？  ^_^</p>
+<p>在解答本章題目之前，先讓我們了解一個概念：return value ﹗<br>我們在 shell 下跑的每一個 command 或 function ，在結束的時候都會傳回父行程一個值，稱為 return value 。<br>在 shell command line 中可用 <code>$?</code> 這個變量得到最 &quot;新&quot; 的一個 return value ，也就是剛結束的那個行程傳回的值。<br>Return Value(RV) 的取值為 0-255 之間，由程式 (或 script) 的作者自行定議：  </p>
+<ul>
+<li>若在 script 裡，用 <code>exit</code> RV 來指定其值，若沒指定，在結束時以最後一道命令之 RV 為值。  </li>
+<li>若在 function 裡，則用 <code>return</code> RV 來代替 <code>exit</code> RV 即可。</li>
+</ul>
+<p>Return Value 的作用，是用來判斷行程的退出狀態(exit status)，只有兩種：</p>
+<ul>
+<li><code>0</code> 的話為 &quot;真&quot;(<code>true</code>)</li>
+<li>非 <code>0</code> 的話為 &quot;假&quot;(<code>false</code>)</li>
+</ul>
+<p>舉個例子來說明好了：
+假設當前目錄內有一份 <code>my.file</code> 的文件，而 <code>no.file</code> 是不存在的：</p>
+<pre><code>$ touch my.file
+$ ls my.file
+$ echo $?        # first echo
+0
+$ ls no.file
+ls: no.file: No such file or directory
+$ echo $?        # second echo
+1
+$ echo $?        # third echo
+0
+</code></pre><p>上例的第一個 <code>echo</code> 是關於 <code>ls my.file</code> 的 RV ，可得到 <code>0</code> 的值，因此為 <code>true</code> ﹔<br>第二個 <code>echo</code> 是關於 <code>ls no.file</code> 的 RV ，則得到非 <code>0</code>  的值，因此為 <code>false</code>﹔<br>第三個 <code>echo</code> 是關於第二個 <code>echo $?</code> 的 RV ，為 <code>0</code> 的值，因此也為 <code>true</code> 。</p>
+<p>請記住：每一個 command 在結束時都會送回 return value 的﹗不管你跑甚麼樣的命令...<br>然而，有一個命令卻是 &quot;專門&quot; 用來測試某一條件而送出 return value 以供 true 或 false 的判斷，<br>它就是 <code>test</code> 命令了﹗
+若你用的是 <code>bash</code> ，請在 command line 下打 <code>man test</code> 或 <code>man bash</code> 來了解這個 <code>test</code> 的用法。<br>這是你可用作參考的最精確的文件了，要是聽別人說的，僅作參考就好...<br>下面我只簡單作一些輔助說明，其餘的一律以 <code>man</code> 為準：</p>
+<p>首先，<code>test</code> 的表示式我們稱為 <code>expression</code> ，其命令格式有兩種：</p>
+<pre><code>test expression 
+or:
+[expression]
+</code></pre><p>(請務必注意 <code>[]</code> 之間的空白鍵﹗)<br>用哪一種格式沒所謂，都是一樣的效果。(我個人比較喜歡後者...)</p>
+<p>其次，<code>bash</code> 的 <code>test</code> 目前支援的測試對像只有三種：</p>
+<ul>
+<li><code>string</code>：字串，也就是純文字。</li>
+<li><code>integer</code>：整數(<code>0</code> 或正整數，不含負數或小數點)。</li>
+<li><code>file</code>：文件。</li>
+</ul>
+<p>請初學者一定要搞清楚這三者的差異，因為 <code>test</code> 所用的 expression 是不一樣的。<br>以 A=123 這個變量為例：</p>
+<ul>
+<li><code>[&quot;$A&quot; = 123]</code>：是字串的測試，以測試 <code>$A</code> 是否為 <code>1</code>、<code>2</code>、<code>3</code> 這三個連續的 &quot;文字&quot;。</li>
+<li><code>[&quot;$A&quot; -eq 123]</code>：是整數的測試，以測試 <code>$A</code> 是否等於 &quot;一百二十三&quot;。</li>
+<li><code>[-e &quot;$A&quot;]</code>：是關於文件的測試，以測試 <code>123</code> 這份 &quot;文件&quot; 是否存在。 </li>
+</ul>
+<p>第三，當 expression 測試為 &quot;真&quot; 時，<code>test</code> 就送回 <code>0</code> (<code>true</code>) 的 return value ，否則送出非 <code>0</code> (<code>false</code>)。<br>若在 expression 之前加上一個 &quot;<code>!</code>&quot;(感嘆號)，則是當 expression 為 &quot;假時&quot; 才送出 <code>0</code> ，否則送出非 <code>0</code> 。<br>同時，test 也允許多重的覆合測試：</p>
+<ul>
+<li><code>expression1 -a expression2</code> ：當兩個 exrepssion 都為 <code>true</code> ，才送出 <code>0</code> ，否則送出非 <code>0</code> 。</li>
+<li><code>expression1 -o expression2</code> ：只需其中一個 exrepssion 為 <code>true</code> ，就送出 <code>0</code> ，只有兩者都為 <code>false</code> 才送出非 <code>0</code> 。</li>
+</ul>
+<p>例如：</p>
+<pre><code>[-d &quot;$file&quot; -a -x &quot;$file&quot;]
+</code></pre><p>是表示當 <code>$file</code> 是一個目錄、且同時具有 <code>x</code> 權限時，<code>test</code> 才會為 <code>true</code> 。</p>
+<p>第四，在 command line 中使用 <code>test</code> 時，請別忘記命令行的 &quot;重組&quot; 特性，<br>也就是在碰到 <code>meta</code> 時會先處理 <code>meta</code> 再重新組建命令行。(這個特性我在第二及第四章都曾反覆強調過)<br>比方說，若 <code>test</code> 碰到變量或命令替換時，若不能滿足 expression 格式時，將會得到語法錯誤的結果。<br>舉例來說好了：</p>
+<p>關於 <code>[string1 = string2]</code> 這個 <code>test</code> 格式，<br>在 <code>=</code> 號兩邊必須要有字串，其中包括空 (<code>null</code>) 字串(可用 soft quote  或 hard quote 取得)。<br>假如 <code>$A</code> 目前沒有定義，或被定議為空字串的話，那如下的寫法將會失敗：</p>
+<pre><code>$ unset A
+$ [$A = abc]
+[: =: unary operator expected
+</code></pre><p>這是因為命令行碰到  <code>$</code> 這個 <code>meta</code> 時，會替換 <code>$A</code> 的值，然後再重組命令行，那就變成了：</p>
+<pre><code>[= abc]
+</code></pre><p>如此一來 <code>=</code> 號左邊就沒有字串存在了，因此造成 <code>test</code> 的語法錯誤﹗<br>但是，下面這個寫法則是成立的：</p>
+<pre><code>$ [&quot;$A&quot; = abc]
+$ echo $?
+1
+</code></pre><p>這是因為在命令行重組後的結果為：  </p>
+<pre><code>[&quot;&quot; = abc]
+</code></pre><p>由於 <code>=</code> 左邊我們用 soft quote 得到一個空字串，而讓 <code>test</code> 語法得以通過... </p>
+<p>讀者諸君請務必留意這些細節哦，因為稍一不慎，將會導至 <code>test</code> 的結果變了個樣﹗<br>若您對 <code>test</code> 還不是很有經驗的話，那在使用 <code>test</code> 時不妨先採用如下這一個 &quot;法則&quot;：</p>
+<ul>
+<li>假如在 <code>test</code> 中碰到變量替換，用 soft quote 是最保險的﹗</li>
+</ul>
+<p>若你對 quoting 不熟的話，請重新溫習第四章的內容吧...  ^_^</p>
+<p>okay，關於更多的 <code>test</code> 用法，老話一句：請看 <code>man page</code> 吧﹗  ^_^</p>
+<p>雖然洋洋灑灑講了一大堆，或許你還在嘀咕.... 那... 那個 return value 有啥用啊？﹗
+問得好﹗<br>告訴你：return value 的作用可大了﹗若你想讓你的 shell 變 &quot;聰明&quot; 的話，就全靠它了：</p>
+<ul>
+<li>有了 return value，我們可以讓 shell 跟據不同的狀態做不同的時情...</li>
+</ul>
+<p>這時候，才讓我來揭曉本章的答案吧~~~  ^_^<br><code>&amp;&amp;</code> 與 <code>||</code> 都是用來 &quot;組建&quot; 多個 command line 用的：</p>
+<ul>
+<li><code>command1 &amp;&amp; command2</code> ：其意思是 <code>command2</code> 只有在 RV 為 <code>0</code> (<code>true</code>) 的條件下執行。</li>
+<li><code>command1 || command2</code> ：其意思是 <code>command2</code> 只有在 RV 為非 <code>0</code> (<code>false</code>) 的條件下執行。</li>
+</ul>
+<p>來，以例子來說好了：</p>
+<pre><code>$ A=123
+$ [-n &quot;$A&quot;] &amp;&amp; echo &quot;yes! it&#39;s ture.&quot;yes! it&#39;s ture.
+$ unset A
+$ [-n &quot;$A&quot;] &amp;&amp; echo &quot;yes! it&#39;s ture.&quot;$ [-n&quot;$A&quot;] || echo&quot;no, it&#39;s NOT ture.&quot;
+no, it&#39;s NOT ture.
+</code></pre><p>(註：<code>[ -n string]</code> 是測試 <code>string</code> 長度大於 <code>0</code> 則為 <code>true</code> 。)</p>
+<p>上例的第一個 <code>&amp;&amp;</code> 命令行之所以會執行其右邊的 <code>echo</code> 命令，是因為上一個 <code>test</code> 送回了 <code>0</code> 的 RV 值﹔<br>但第二次就不會執行，因為 <code>test</code> 送回非 <code>0</code> 的結果...<br>同理，<code>||</code> 右邊的 <code>echo</code> 會被執行，卻正是因為左邊的 <code>test</code> 送回非 <code>0</code> 所引起的。</p>
+<p>事實上，我們在同一命令行中，可用多個 <code>&amp;&amp;</code> 或 <code>||</code> 來組建呢：</p>
+<pre><code>$ A=123
+$ [-n &quot;$A&quot;] &amp;&amp; echo &quot;yes! it&#39;s ture.&quot;|| echo&quot;no, it&#39;s NOT ture.&quot;
+yes! it&#39;s ture.
+$ unset A
+$ [-n &quot;$A&quot;] &amp;&amp; echo &quot;yes! it&#39;s ture.&quot;|| echo&quot;no, it&#39;s NOT ture.&quot;
+no, it&#39;s NOT ture.
+</code></pre><p>怎樣，從這一刻開始，你是否覺得我們的 shell 是 &quot;很聰明&quot; 的呢？  ^_^</p>
+<p>好了，最後，佈置一道習題給大家做做看、、、<br>下面的判斷是：當 <code>$A</code> 被賦與值時，再看是否小於 <code>100</code> ，否則送出 <code>too big!</code> ：</p>
+<pre><code>$ A=123
+$ [-n &quot;$A&quot;] &amp;&amp; [&quot;$A&quot; -lt 100] || echo &#39;too big!&#39;
+too big!
+</code></pre><p>若我將 <code>A</code> 取消，照理說，應該不會送文字才對啊(因為第一個條件就不成立了)...</p>
+<pre><code>$ unset A
+$ [-n &quot;$A&quot;] &amp;&amp; [&quot;$A&quot; -lt 100] || echo &#39;too big!&#39;
+too big!
+</code></pre><p>為何上面的結果也可得到呢？<br>又，如何解決之呢？<br>(提示：修改方法很多，其中一種方法可利用第七章介紹過的 command group ...)</p>
+<p>快﹗告我我答案﹗其餘免談....</p>
+</section></article><article id="Q11"><h1><span class="number">Q11.</span><span class="title"> <code>&gt;</code> 與 <code>&lt;</code> 差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=7#pid1636825">#</a></h1><section><p>這次的題目之前我在 CU 的 shell 版已說明過了：<br>(原貼連結在論壇改版後已經失效)<br>這次我就不重寫了，將貼子的內容 &quot;抄&quot; 下來就是了...</p>
+<p><strong>11.1</strong></p>
+<p>談到 I/O redirection ，不妨先讓我們認識一下 File Descriptor (FD) 。 </p>
+<p>程式的運算，在大部份情況下都是進行數據 (data) 的處理，
+這些數據從哪讀進？又，送出到哪裡呢？
+這就是 file descriptor (FD) 的功用了。 </p>
+<p>在 shell 程式中，最常使用的 FD 大概有三個，分別為：</p>
+<ul>
+<li><code>0</code>: Standard Input (STDIN) </li>
+<li><code>1</code>: Standard Output (STDOUT) </li>
+<li><code>2</code>: Standard Error Output (STDERR) </li>
+</ul>
+<p>在標準情況下，這些 FD 分別跟如下設備 (device) 關聯： </p>
+<ul>
+<li><code>stdin(0)</code>: keyboard </li>
+<li><code>stdout(1)</code>: monitor </li>
+<li><code>stderr(2)</code>: monitor </li>
+</ul>
+<p>我們可以用如下下命令測試一下： </p>
+<pre><code>$ mail -s test root 
+this is a test mail. 
+please skip. 
+^d (同時按 crtl 跟 d 鍵)
+</code></pre><p>很明顯，<code>mail</code> 程式所讀進的數據，就是從 <code>stdin</code> 也就是 keyboard 讀進的。
+不過，不見得每個程式的 <code>stdin</code> 都跟 <code>mail</code> 一樣從 keyboard 讀進，
+因為程式作者可以從檔案參數讀進 <code>stdin</code> ，如：</p>
+<pre><code>$ cat /etc/passwd
+</code></pre><p>但，要是 <code>cat</code> 之後沒有檔案參數則又如何呢？
+哦，請您自己玩玩看囉.... ^_^ </p>
+<pre><code>$ cat
+</code></pre><p>(請留意數據輸出到哪裡去了，最後別忘了按 <code>^d</code> 離開...) </p>
+<p>至於 <code>stdout</code> 與 <code>stderr</code> ，嗯... 等我有空再續吧... ^_^
+還是，有哪位前輩要來玩接龍呢？ </p>
+<p><strong>11.2</strong></p>
+<p>沿文再續，書接上一回... ^_^ </p>
+<p>相信，經過上一個練習後，你對 <code>stdin</code> 與 <code>stdout</code> 應該不難理解吧？
+然後，讓我們繼續看 <code>stderr</code> 好了。
+事實上，<code>stderr</code> 沒甚麼難理解的：說穿了就是 &quot;錯誤信息&quot; 要往哪邊送而已...
+比方說，若讀進的檔案參數是不存在的，那我們在 monitor 上就看到了： </p>
+<pre><code>$ ls no.such.file 
+ls: no.such.file: No such file or directory
+</code></pre><p>若，一個命令同時產生 <code>stdout</code> 與 <code>stderr</code> 呢？
+那還不簡單，都送到 monitor 來就好了： </p>
+<pre><code>$ touch my.file 
+$ ls my.file no.such.file 
+ls: no.such.file: No such file or directory 
+my.file
+</code></pre><p>okay，至此，關於 FD 及其名稱、還有相關聯的設備，相信你已經沒問題了吧？
+那好，接下來讓我們看看如何改變這些 FD 的預設數據通道，
+我們可用 <code>&lt;</code> 來改變讀進的數據通道(<code>stdin</code>)，使之從指定的檔案讀進。
+我們可用 <code>&gt;</code> 來改變送出的數據通道(<code>stdout</code>, <code>stderr</code>)，使之輸出到指定的檔案。</p>
+<p>比方說： </p>
+<pre><code>$ cat &lt; my.file
+</code></pre><p>就是從 <code>my.file</code> 讀進數據 </p>
+<pre><code>$ mail -s test root &lt; /etc/passwd
+</code></pre><p>則是從 <code>/etc/passwd</code> 讀進...
+這樣一來，<code>stdin</code> 將不再是從 keyboard 讀進，而是從檔案讀進了...
+嚴格來說，<code>&lt;</code> 符號之前需要指定一個 FD 的(之間不能有空白)，
+但因為 <code>0</code> 是 <code>&lt;</code> 的預設值，因此 <code>&lt;</code> 與 <code>0&lt;</code> 是一樣的﹗ </p>
+<p>okay，這個好理解吧？
+那，要是用兩個 <code>&lt;&lt;</code> 又是啥呢？
+這是所謂的 HERE Document ，它可以讓我們輸入一段文本，直到讀到 <code>&lt;&lt;</code> 後指定的字串。
+比方說： </p>
+<pre><code>$ cat &lt;&lt;FINISH 
+first line here 
+second line there 
+third line nowhere 
+FINISH
+</code></pre><p>這樣的話，<code>cat</code> 會讀進 3 行句子，而無需從 keyboard 讀進數據且要等 <code>^d</code> 結束輸入。 </p>
+<p>至於 <code>&gt;</code> 又如何呢？<br>且聽下回分解....</p>
+<p><strong>11.3</strong></p>
+<p>okay，又到講古時間~~~ </p>
+<p>當你搞懂了 <code>0&lt;</code> 原來就是改變 <code>stdin</code> 的數據輸入通道之後，相信要理解如下兩個 redirection 就不難了： </p>
+<ul>
+<li><code>1&gt;</code> </li>
+<li><code>2&gt;</code> </li>
+</ul>
+<p>前者是改變 <code>stdout</code> 的數據輸出通道，後者是改變 <code>stderr</code> 的數據輸出通道。
+兩者都是將原本要送出到 monitor 的數據轉向輸出到指定檔案去。
+由於 <code>1</code> 是 <code>&gt;</code> 的預設值，因此，<code>1&gt;</code> 與 <code>&gt;</code> 是相同的，都是改變 <code>stdout</code> 。</p>
+<p>用上次的 <code>ls</code> 例子來說明一下好了： </p>
+<pre><code>$ ls my.file no.such.file 1&gt;file.out 
+ls: no.such.file: No such file or directory
+</code></pre><p>這樣 monitor 就只剩下 <code>stderr</code> 而已。因為 <code>stdout</code> 給寫進 <code>file.out</code> 去了。</p>
+<pre><code>$ ls my.file no.such.file 2&gt;file.err 
+my.file
+</code></pre><p>這樣 monitor 就只剩下 <code>stdout</code> ，因為 <code>stderr</code> 寫進了 <code>file.err</code> 。</p>
+<pre><code>$ ls my.file no.such.file 1&gt;file.out 2&gt;file.err
+</code></pre><p>這樣 monitor 就啥也沒有，因為 <code>stdout</code> 與 <code>stderr</code> 都給轉到檔案去了...</p>
+<p>呵~~~ 看來要理解 <code>&gt;</code> 一點也不難啦﹗是不？沒騙你吧？ ^_^ 
+不過，有些地方還是要注意一下的。 </p>
+<p>首先，是同時寫入的問題。比方如下這個例子：</p>
+<pre><code>$ ls my.file no.such.file 1&gt;file.both 2&gt;file.both
+</code></pre><p>假如 <code>stdout(1)</code> 與 <code>stderr(2)</code> 都同時在寫入 <code>file.both</code> 的話，
+則是採取“覆蓋”方式：後來寫入的覆蓋前面的。
+讓我們假設一個 <code>stdout</code> 與 <code>stderr</code> 同時寫入 <code>file.out</code> 的情形好了： </p>
+<ul>
+<li>首先 <code>stdout</code> 寫入 10 個字元 </li>
+<li>然後 <code>stderr</code> 寫入 6 個字元</li>
+</ul>
+<p>那麼，這時候原本 <code>stdout</code> 輸出的 10 個字元就被 <code>stderr</code> 覆蓋掉了。</p>
+<p>那，如何解決呢？所謂山不轉路轉、路不轉人轉嘛，
+我們可以換一個思維：將 <code>stderr</code> 導進 <code>stdout</code> 或將 <code>stdout</code> 導進 <code>stderr</code> ，而不是大家在搶同一份檔案，不就行了﹗
+bingo﹗就是這樣啦： </p>
+<ul>
+<li><code>2&gt;&amp;1</code> 就是將 <code>stderr</code> 併進 <code>stdout</code> 作輸出 </li>
+<li><code>1&gt;&amp;2</code> 或 <code>&gt;&amp;2</code> 就是將 <code>stdout</code> 併進 <code>stderr</code> 作輸出 </li>
+</ul>
+<p>於是，前面的錯誤操作可以改為：</p>
+<pre><code>$ ls my.file no.such.file 1&gt;file.both 2&gt;&amp;1 
+或 
+$ ls my.file no.such.file 2&gt;file.both &gt;&amp;2
+</code></pre><p>這樣，不就皆大歡喜了嗎？ 呵~~~ ^_^ </p>
+<p>不過，光解決了同時寫入的問題還不夠，我們還有其他技巧需要了解的。
+故事還沒結束，別走開﹗廣告後，我們再回來...﹗</p>
+<p><strong>11.4</strong></p>
+<p>okay，這次不講 I/O Redirction ，講佛吧...
+(有沒搞錯？﹗網中人是否頭殼燒壞了？...) 嘻~~~ ^_^ </p>
+<p>學佛的最高境界，就是 &quot;四大皆空&quot;。至於是空哪四大塊？我也不知，因為我還沒到那境界... 
+但這個 &quot;空&quot; 字，卻非常值得我們返複把玩的： </p>
+<blockquote>
+<p>色即是空、空即是色﹗ </p>
+</blockquote>
+<p>好了，施主要是能夠領會 &quot;空&quot; 的禪意，那離修成正果不遠矣~~~ </p>
+<p>在 Linux 檔案系統裡，有個設備檔位於 <code>/dev/null</code> 。
+許多人都問過我那是甚麼玩意兒？我跟你說好了：那就是 &quot;空&quot; 啦﹗
+沒錯﹗空空如也的空就是 <code>null</code> 了.... 請問施主是否忽然有所頓誤了呢？然則恭喜了~~~ ^_^ </p>
+<p>這個 <code>null</code> 在 I/O Redirection 中可有用得很呢： </p>
+<ul>
+<li>若將 FD1 跟 FD2 轉到 <code>/dev/null</code> 去，就可將 <code>stdout</code> 與 <code>stderr</code> 弄不見掉。 </li>
+<li>若將 FD0 接到 <code>/dev/null</code> 來，那就是讀進 <code>nothing</code> 。 </li>
+</ul>
+<p>比方說，當我們在執行一個程式時，畫面會同時送出 <code>stdout</code> 跟 <code>stderr</code> ，
+假如你不想看到 <code>stderr</code> (也不想存到檔案去)，那可以：</p>
+<pre><code>$ ls my.file no.such.file 2&gt;/dev/null 
+my.file
+</code></pre><p>若要相反：只想看到 <code>stderr</code> 呢？還不簡單﹗將 <code>stdout</code> 弄到 <code>null</code> 就行： </p>
+<pre><code>$ ls my.file no.such.file &gt;/dev/null 
+ls: no.such.file: No such file or directory
+</code></pre><p>那接下來，假如單純只跑程式，不想看到任何輸出結果呢？
+哦，這裡留了一手上次節目沒講的法子，專門贈予有緣人﹗... ^_^ 
+除了用 <code>&gt;/dev/null 2&gt;&amp;1</code> 之外，你還可以如此：</p>
+<pre><code>$ ls my.file no.such.file &amp;&gt;/dev/null
+</code></pre><p>(提示：將 <code>&amp;&gt;</code> 換成 <code>&gt;&amp;</code> 也行啦~~! ) </p>
+<p>okay？講完佛，接下來，再讓我們看看如下情況：</p>
+<pre><code>$ echo &quot;1&quot; &gt; file.out 
+$ cat file.out 
+1 
+$ echo &quot;2&quot; &gt; file.out 
+$ cat file.out 
+2
+</code></pre><p>看來，我們在重導 <code>stdout</code> 或 <code>stderr</code> 進一份檔案時，似乎永遠只獲得最後一次導入的結果。
+那，之前的內容呢？
+呵~~~ 要解決這個問提很簡單啦，將 <code>&gt;</code> 換成 <code>&gt;&gt;</code> 就好：</p>
+<pre><code>$ echo &quot;3&quot; &gt;&gt; file.out 
+$ cat file.out 
+2 
+3
+</code></pre><p>如此一來，被重導的目標檔案之內容並不會失去，而新的內容則一直增加在最後面去。
+easy ？ 呵 ... ^_^ </p>
+<p>但，只要你再一次用回單一的 <code>&gt;</code> 來重導的話，那麼，舊的內容還是會被 &quot;洗&quot; 掉的﹗
+這時，你要如何避免呢？
+---- 備份﹗ yes ，我聽到了﹗不過.... 還有更好的嗎？
+既然與施主這麼有緣份，老納就送你一個錦囊妙法吧：</p>
+<pre><code>$ set -o noclobber 
+$ echo &quot;4&quot; &gt; file.out 
+-bash: file: cannot overwrite existing file
+</code></pre><p>那，要如何取消這個 &quot;限制&quot; 呢？
+哦，將 <code>set -o</code> 換成 <code>set +o</code> 就行：</p>
+<pre><code>$ set +o noclobber 
+$ echo &quot;5&quot; &gt; file.out 
+$ cat file.out 
+5
+</code></pre><p>再問：那... 有辦法不取消而又 &quot;臨時&quot; 蓋寫目標檔案嗎？
+哦，佛曰：不可告也﹗ 
+啊~~~ 開玩笑的、開玩笑的啦~~~  ^_^ 唉，早就料到人心是不足的了﹗</p>
+<pre><code>$ set -o noclobber 
+$ echo &quot;6&quot; &gt;| file.out 
+$ cat file.out 
+6
+</code></pre><p>留意到沒有：在 <code>&gt;</code> 後面再加個 &quot;<code>|</code>&quot; 就好(注意： <code>&gt;</code> 與 <code>|</code> 之間不能有空白哦).... </p>
+<p>呼.... (深呼吸吐納一下吧)~~~ ^_^ 
+再來還有一個難題要你去參透的呢： </p>
+<pre><code>$ echo &quot;some text here&quot; &gt; file 
+$ cat &lt; file 
+some text here 
+$ cat &lt;file&gt; file.bak 
+$ cat &lt; file.bak 
+some text here 
+$ cat &lt;file&gt; file 
+$ cat &lt; file
+</code></pre><p>嗯？﹗注意到沒有？﹗﹗
+---- 怎麼最後那個 <code>cat</code> 命令看到的 <code>file</code> 竟是空的？﹗
+why? why? why? </p>
+<p>同學們：下節課不要遲到囉~~~!</p>
+<p><strong>11.5</strong></p>
+<p>噹噹噹~~~ 上課囉~~~ ^_^ </p>
+<p>前面提到：<code>$ cat &lt;file&gt; file</code> 之後原本有內容的檔案結果卻被洗掉了﹗
+要理解這一現像其實不難，這只是 priority 的問題而已：</p>
+<ul>
+<li>在 IO Redirection 中，<code>stdout</code> 與 <code>stderr</code> 的管道會先準備好，才會從 <code>stdin</code> 讀進資料。</li>
+</ul>
+<p>也就是說，在上例中，<code>&gt; file</code> 會先將 <code>file</code> 清空，然後才讀進 <code>&lt; file</code> ，
+但這時候檔案已經被清空了，因此就變成讀不進任何資料了... </p>
+<p>哦~~~ 原來如此~~~~ ^_^
+那... 如下兩例又如何呢？</p>
+<pre><code>$ cat &lt;&gt; file 
+$ cat &lt;file&gt;&gt; file
+</code></pre><p>嗯... 同學們，這兩個答案就當練習題囉，下節課之前請交作業﹗ </p>
+<p>好了，I/O Redirection 也快講完了，sorry，因為我也只知道這麼多而已啦~~~ 嘻~~ ^_^ 
+不過，還有一樣東東是一定要講的，各位觀眾(請自行配樂~!#@!$%) ：
+<strong> 就是 pipe line 也﹗</strong> </p>
+<p>談到 pipe line ，我相信不少人都不會陌生：
+我們在很多 command line 上常看到的 &quot;<code>|</code>&quot; 符號就是 pipe line 了。
+不過，究竟 pipe line 是甚麼東東呢？
+別急別急... 先查一下英漢字典，看看 pipe 是甚麼意思？
+沒錯﹗它就是 &quot;水管&quot; 的意思... 
+那麼，你能想像一下水管是怎麼一根接著一根的嗎？
+又，每根水管之間的 input 跟 output 又如何呢？
+嗯？？
+靈光一閃：原來 pipe line 的 I/O 跟水管的 I/O 是一模一樣的：</p>
+<ul>
+<li>上一個命令的 <code>stdout</code> 接到下一個命令的 <code>stdin</code> 去了﹗ </li>
+</ul>
+<p>的確如此... 不管在 command line 上你使用了多少個 pipe line ，
+前後兩個 command 的 I/O 都是彼此連接的﹗(恭喜：你終於開竅了﹗ ^_^) </p>
+<p>不過... 然而... 但是... ... <code>stderr</code> 呢？
+好問題﹗不過也容易理解：</p>
+<ul>
+<li>若水管漏水怎麼辦？ </li>
+</ul>
+<p>也就是說：在 pipe line 之間，前一個命令的 <code>stderr</code> 是不會接進下一命令的 <code>stdin</code> 的，
+其輸出，若不用 <code>2&gt;</code> 導到 file 去的話，它還是送到監視器上面來﹗ 
+這點請你在 pipe line 運用上務必要注意的。</p>
+<p>那，或許你又會問：</p>
+<ul>
+<li>有辦法將 stderr 也餵進下一個命令的 stdin 去嗎？</li>
+</ul>
+<p>(貪得無厭的家夥﹗)<br>方法當然是有，而且你早已學過了﹗ ^_^ 
+我提示一下就好： </p>
+<ul>
+<li>請問你如何將 <code>stderr</code> 合併進 <code>stdout</code> 一同輸出呢？ </li>
+</ul>
+<p>若你答不出來，下課之後再來問我吧... (如果你臉皮真夠厚的話...) </p>
+<p>或許，你仍意尤未盡﹗或許，你曾經碰到過下面的問題：</p>
+<ul>
+<li>在 <code>cm1 | cm2 | cm3</code> ... 這段 pipe line 中，若要將 <code>cm2</code> 的結果存到某一檔案呢？ </li>
+</ul>
+<p>若你寫成 <code>cm1 | cm2 &gt; file | cm3</code> 的話，
+那你肯定會發現 <code>cm3</code> 的 <code>stdin</code> 是空的﹗(當然啦，你都將水管接到別的水池了﹗) 
+聰明的你或許會如此解決：</p>
+<pre><code>cm1 | cm2 &gt; file ; cm3 &lt; file
+</code></pre><p>是的，你的確可以這樣做，但最大的壞處是：這樣一來，<code>file I/O</code> 會變雙倍﹗
+在 command 執行的整個過程中，<code>file</code> I/O 是最常見的最大效能殺手。
+凡是有經驗的 shell 操作者，都會盡量避免或降低 <code>file</code> I/O 的頻率。</p>
+<p>那，上面問題還有更好方法嗎？<br>有的，那就是 <code>tee</code> 命令了。</p>
+<ul>
+<li>所謂 <code>tee</code> 命令是在不影響原本 I/O 的情況下，將 <code>stdout</code> 複製一份到檔案去。</li>
+</ul>
+<p>因此，上面的命令行可以如此打： </p>
+<pre><code>cm1 | cm2 | tee file | cm3
+</code></pre><p>在預設上，<code>tee</code> 會改寫目標檔案，若你要改為增加內容的話，那可用 <code>-a</code> 參數達成。 </p>
+<p>基本上，pipe line 的應用在 shell 操作上是非常廣泛的，尤其是在 text filtering 方面， 
+凡舉 <code>cat</code>, <code>more</code>, <code>head</code>, <code>tail</code>, <code>wc</code>, <code>expand</code>, <code>tr</code>, <code>grep</code>, <code>sed</code>, <code>awk</code>, ... 等等文字處理工具，<br>搭配起 pipe line 來使用，你會驚覺 command line 原來是活得如此精彩的﹗
+常讓人有 &quot;眾裡尋他千百度，驀然回首，那人卻在燈火闌珊處﹗&quot; 之感... ^_^ </p>
+<p>.... </p>
+<p>好了，關於 I/O Redirection 的介紹就到此告一段落。
+若日後有空的話，再為大家介紹其它在 shell 上好玩的東西﹗bye... ^_^</p>
+</section></article><article id="Q12"><h1><span class="number">Q12.</span><span class="title"> 你要 <code>if</code> 還是 <code>case</code> 呢？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=8#pid1679488">#</a></h1><section><p>放了一個愉快的春節假期，人也變得懶懶散散的... 只是，答應了大家的作業，還是要堅持完成就是了~~~</p>
+<p>還記得我們在第 10 章所介紹的 return value 嗎？<br>是的，接下來介紹的內容與之有關，若你的記憶也被假期的歡樂時光所抵消掉的話，
+那，建議您還是先回去溫習溫習再回來...</p>
+<p>若你記得 return value ，我想你也應該記得了 <code>&amp;&amp;</code> 與 <code>||</code> 是甚麼意思吧？
+用這兩個符號再配搭 command group 的話，我們可讓 shell script 變得更加聰明哦。
+比方說：</p>
+<pre><code>comd1 &amp;&amp; {
+    comd2
+    comd3
+    :
+} || {
+    comd4
+    comd5
+}
+</code></pre><p>意思是說：<br>假如 <code>comd1</code> 的 return value 為 <code>true</code> 的話，<br>然則執行 <code>comd2</code> 與 <code>comd3</code> ，<br>否則執行 <code>comd4</code> 與 <code>comd5</code> 。</p>
+<p>事實上，我們在寫 shell script 的時候，經常需要用到這樣那樣的條件以作出不同的處理動作。
+用 <code>&amp;&amp;</code> 與 <code>||</code> 的確可以達成條件執行的效果，然而，從 &quot;人類語言&quot; 上來理解，卻不是那麼直觀。
+更多時候，我們還是喜歡用 <code>if .... then ... else ...</code> 這樣的 keyword 來表達條件執行。
+在 bash shell 中，我們可以如此修改上一段代碼：</p>
+<pre><code>if comd1
+then
+    comd2
+    comd3
+else
+    comd4
+    comd5
+fi
+</code></pre><p>這也是我們在 shell script 中最常用到的 <code>if</code> 判斷式：
+只要 <code>if</code> 後面的 command line 返回 <code>true</code> 的 return value (我們最常用 <code>test</code> 命令來送出 return value)，
+然則就執行 <code>then</code> 後面的命令，否則執行 <code>else</code> 後的命令﹔<code>fi</code> 則是用來結束判斷式的 keyword 。</p>
+<p>在 <code>if</code> 判斷式中，<code>else</code> 部份可以不用，但 <code>then</code> 是必需的。
+(若 <code>then</code> 後不想跑任何 command ，可用 &quot;<code>：</code>&quot; 這個 null command 代替)。
+當然，<code>then</code> 或 <code>else</code> 後面，也可以再使用更進一層的條件判斷式，這在 shell script 設計上很常見。
+若有多項條件需要 &quot;依序&quot; 進行判斷的話，那我們則可使用 <code>elif</code> 這樣的 keyword ：</p>
+<pre><code>if comd1; then
+    comd2
+elif comd3; then
+    comd4
+else
+    comd5
+fi
+</code></pre><p>意思是說：
+若 <code>comd1</code> 為 <code>true</code> ，然則執行 <code>comd2</code> ﹔<br>否則再測試 <code>comd3</code> ，然則執行 <code>comd4</code> ﹔<br>倘若 <code>comd1</code> 與 <code>comd3</code> 均不成立，那就執行 <code>comd5</code> 。</p>
+<p><code>if</code> 判斷式的例子很常見，你可從很多 shell script 中看得到，我這裡就不再舉例子了...</p>
+<p>接下來要為大家介紹的是 <code>case</code> 判斷式。
+雖然 <code>if</code> 判斷式已可應付大部份的條件執行了，然而，在某些場合中，卻不夠靈活，
+尤其是在 <code>string</code> 式樣的判斷上，比方如下：</p>
+<pre><code>QQ () {echo -n &quot;Do you want to continue? (Yes/No):&quot;
+    read YN
+    if [&quot;$YN&quot; = Y -o &quot;$YN&quot; = y -o &quot;$YN&quot; = &quot;Yes&quot; -o &quot;$YN&quot; = &quot;yes&quot; -o &quot;$YN&quot; = &quot;YES&quot;]
+    then
+        QQ
+    else
+        exit 0
+    fi
+}
+QQ
+</code></pre><p>從例中，我們看得出來，最麻煩的部份是在於判斷 <code>YN</code> 的值可能有好幾種式樣。
+聰明的你或許會如此修改：</p>
+<pre><code>...
+if echo &quot;$YN&quot; | grep -q &#39;^[Yy]\([Ee][Ss]\)*$&#39;
+...
+</code></pre><p>也就是用 Regular Expression 來簡化代碼。(我們有機會再來介紹 RE)
+只是... 是否有其它更方便的方法呢？
+有的，就是用 <code>case</code> 判斷式即可：</p>
+<pre><code>QQ () {echo -n &quot;Do you want to continue? (Yes/No):&quot;
+    read YN
+   case &quot;$YN&quot; in
+        [Yy]|[Yy][Ee][Ss])
+            QQ
+            ;;
+        *)
+            exit 0
+            ;;
+    esac
+}
+QQ
+</code></pre><p>我們常用 <code>case</code> 的判斷式來判斷某一變量在不同的值 (通常是 <code>string</code>) 時作出不同的處理，
+比方說，判斷 script 參數以執行不同的命令。
+若你有興趣、且用 Linux 系統的話，不妨挖一挖 <code>/etc/init.d/*</code> 裡那堆 script 中的 <code>case</code> 用法。
+如下就是一例：</p>
+<pre><code>case &quot;$1&quot; in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        rhstatus
+        ;;
+  restart|reload)
+        restart
+        ;;
+  condrestart)
+        [-f /var/lock/subsys/syslog] &amp;&amp; restart || :
+        ;;
+  *)
+        echo $&quot;Usage: $0 {start|stop|status|restart|condrestart}&quot;
+        exit 1
+esac
+</code></pre><p>(若你對 positional parameter 的印像已經模糊了，請重看第 9 章吧。)</p>
+<p>okay，十三問還剩一問而已，過幾天再來搞定之....  ^_^</p>
+</section></article><article id="Q13"><h1><span class="number">Q13.</span><span class="title"> <code>for</code> what?  <code>while</code> 與 <code>until</code> 差在哪？</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=8#pid1692457">#</a></h1><section><p>終於，來到 shell 十三問的最後一問了...  長長吐一口氣~~~~</p>
+<p>最後要介紹的是 shell script 設計中常見的 &quot;循環&quot;(loop)。
+所謂的 loop 就是 script 中的一段在一定條件下反覆執行的代碼。
+bash shell  中常用的 loop 有如下三種：</p>
+<ul>
+<li><code>for</code></li>
+<li><code>while</code></li>
+<li><code>until</code></li>
+</ul>
+<p><code>for</code> loop 是從一個清單列表中讀進變量值，並 &quot;依次&quot; 的循環執行 <code>do</code> 到 <code>done</code> 之間的命令行。<br>例：</p>
+<pre><code>for var in one two three four five
+do
+    echo -----------
+    echo &#39;$var is&#39;$var
+    echo
+done
+</code></pre><p>上例的執行結果將會是：</p>
+<ul>
+<li>1) <code>for</code> 會定義一個叫 <code>var</code> 的變量，其值依次是 <code>one two three four five</code> 。</li>
+<li>2) 因為有 5 個變量值，因此 <code>do</code> 與 <code>done</code> 之間的命令行會被循環執行 5 次。</li>
+<li>3) 每次循環均用 <code>echo</code> 產生三行句子。
+   而第二行中不在 hard quote 之內的 <code>$var</code> 會依次被替換為 <code>one two three four five</code> 。</li>
+<li>4) 當最後一個變量值處理完畢，循環結束。</li>
+</ul>
+<p>我們不難看出，在 <code>for</code> loop 中，變量值的多寡，決定循環的次數。
+然而，變量在循環中是否使用則不一定，得視設計需求而定。
+倘若 <code>for</code> loop 沒有使用 <code>in</code> 這個 keyword 來指定變量值清單的話，其值將從 <code>$@</code> (或 <code>$*</code>)中繼承：</p>
+<pre><code>for var; do
+    ....
+done
+</code></pre><p>(若你忘記了 positional parameter ，請溫習第 9 章...)</p>
+<p><code>for</code> loop 用於處理 &quot;清單&quot;(list)項目非常方便，
+其清單除了可明確指定或從 positional parameter 取得之外，
+也可從變量替換或命令替換取得... (再一次提醒：別忘了命令行的 &quot;重組&quot; 特性﹗)
+然而，對於一些 &quot;累計變化&quot; 的項目(如整數加減)，<code>for</code> 亦能處理：</p>
+<pre><code>for ((i=1;i&lt;=10;i++))
+do
+   echo &quot;num is $i&quot;
+done
+</code></pre><p>除了 <code>for</code> loop ，上面的例子我們也可改用  <code>while</code> loop 來做到：</p>
+<pre><code>num=1
+while [&quot;$num&quot; -le 10]; do
+    echo &quot;num is $num&quot;
+    num=$(($num + 1))
+done
+</code></pre><p><code>while</code> loop 的原理與 <code>for</code> loop 稍有不同：
+它不是逐次處理清單中的變量值，而是取決於 <code>while</code> 後面的命令行之 return value ：</p>
+<ul>
+<li>若為 <code>ture</code> ，則執行 <code>do</code> 與 <code>done</code> 之間的命令，然後重新判斷 <code>while</code> 後的 return value 。</li>
+<li>若為 <code>false</code> ，則不再執行 <code>do</code> 與 <code>done</code> 之間的命令而結束循環。</li>
+</ul>
+<p>分析上例：</p>
+<ul>
+<li>1) 在 <code>while</code> 之前，定義變量 <code>num=1</code> 。</li>
+<li>2) 然後測試(<code>test</code>) <code>$num</code> 是否小於或等於 <code>10</code> 。</li>
+<li>3) 結果為 <code>true</code> ，於是執行 <code>echo</code> 並將 <code>num</code> 的值加一。</li>
+<li>4) 再作第二輪測試，此時 <code>num</code> 的值為 <code>1+1=2</code> ，依然小於或等於 <code>10</code>，因此為 <code>true</code> ，繼續循環。</li>
+<li>5) 直到 <code>num</code> 為 <code>10+1=11</code> 時，測試才會失敗... 於是結束循環。</li>
+</ul>
+<p>我們不難發現：
+若 <code>while</code> 的測試結果永遠為 <code>true</code> 的話，那循環將一直永久執行下去：</p>
+<p>while :; do
+    echo looping...
+done</p>
+<p>上例的 &quot;<code>:</code>&quot; 是 bash 的 null command ，不做任何動作，除了送回 <code>true</code> 的 return value 。
+因此這個循環不會結束，稱作死循環。
+死循環的產生有可能是故意設計的(如跑 daemon)，也可能是設計錯誤。
+若要結束死尋環，可透過 signal 來終止(如按下 <code>ctrl-c</code>)。
+(關於 process 與 signal ，等日後有機會再補充，十三問暫時略過。)</p>
+<p>一旦你能夠理解 <code>while</code> loop 的話，那，就能理解 <code>until</code> loop ：</p>
+<ul>
+<li>與 <code>while</code> 相反，<code>until</code> 是在 return value 為 <code>false</code> 時進入循環，否則結束。</li>
+</ul>
+<p>因此，前面的例子我們也可以輕鬆的用 <code>until</code> 來寫：</p>
+<pre><code>num=1
+until [! &quot;$num&quot; -le 10]; do
+    echo &quot;num is $num&quot;
+    num=$(($num + 1))
+done
+</code></pre><p>或是：</p>
+<pre><code>num=1
+until [&quot;$num&quot; -gt 10]; do
+    echo &quot;num is $num&quot;
+    num=$(($num + 1))
+done
+</code></pre><p>okay ，關於 bash 的三個常用的 loop 暫時介紹到這裡。
+在結束本章之前，再跟大家補充兩個與 loop 有關的命令：</p>
+<ul>
+<li>break</li>
+<li>continue</li>
+</ul>
+<p>這兩個命令常用在複合式循環裡，也就是在 <code>do ... done</code> 之間又有更進一層的 loop ，
+當然，用在單一循環中也未嘗不可啦...  ^_^</p>
+<p><code>break</code> 是用來打斷循環，也就是 &quot;強迫結束&quot; 循環。
+若 <code>break</code> 後面指定一個數值 <code>n</code> 的話，則 &quot;從裡向外&quot; 打斷第 <code>n</code> 個循環，
+預設值為 <code>break 1</code> ，也就是打斷當前的循環。
+在使用 <code>break</code> 時需要注意的是， 它與 <code>return</code> 及 <code>exit</code> 是不同的：</p>
+<ul>
+<li><code>break</code> 是結束 loop </li>
+<li><code>return</code> 是結束 function</li>
+<li><code>exit</code> 是結束 script/shell</li>
+</ul>
+<p>而 <code>continue</code> 則與 <code>break</code> 相反：強迫進入下一次循環動作。
+若你理解不來的話，那你可簡單的看成：在 <code>continue</code> 到 <code>done</code> 之間的句子略過而返回循環頂端...
+與 <code>break</code> 相同的是：<code>continue</code> 後面也可指定一個數值 <code>n</code> ，以決定繼續哪一層 (從裡向外計算) 的循環，
+預設值為 <code>continue 1</code> ，也就是繼續當前的循環。</p>
+<p>在 shell script 設計中，若能善用 loop ，將能大幅度提高 script 在複雜條件下的處理能力。
+請多加練習吧....</p>
+<hr>
+<p>好了，該是到了結束的時候了。
+婆婆媽媽的跟大家囉唆了一堆關於 shell 的基礎概念，
+目的不是要告訴大家 &quot;答案&quot;，而是要帶給大家 &quot;啟發&quot;...
+在日後關於 shell 的討論中，我或許會經常用 &quot;鏈接&quot; 方式指引回來十三問中的內容，
+以便我們在進行技術探討時彼此能有一些討論基礎，而不至於各說各話、徒費時力。
+但，更希望十三問能帶給你更多的思考與樂趣，至為重要的是透過實作來加深理解。</p>
+<p>是的，我很重視 &quot;實作&quot; 與 &quot;獨立思考&quot; 這兩項學習要素，若你能夠掌握其中真義，那請容我說聲：
+--- 恭喜﹗十三問你沒白看了﹗  ^_^</p>
+<p>p.s.<br>至於補充問題部份，我暫時不寫了。而是希望：</p>
+<ul>
+<li>1) 大家擴充題目。</li>
+<li>2) 一起來寫心得。</li>
+</ul>
+<p>Good luck and happy studying!</p>
+</section></article><article id="B1-I"><h1><span class="number">B1-I.</span><span class="title"> [^] 跟 [!] 差在哪？(Wildcard)</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=16#pid2930144">#</a></h1><section><p>這個問題等了好久都沒人出來補充, 而我呢, 也被追殺了好幾回...  ^_^
+趁著今晚有一點空閒, 趕快將此樁心事做一了結吧...</p>
+<p>這道題目說穿了, 就是要探討 Wildcard 與 Regular Expression 的差別的.
+這也是許多初學 shell 的朋友很容易混亂的地方.
+首先, 讓我們回到十三問之第 2 問, 再一次將我們提到的 command line format 溫習一次:</p>
+<pre><code>command_name options arguments
+</code></pre><p>同時, 也再來理解一下我在第 5 問所提到的變量替換的特性:</p>
+<blockquote>
+<p>先替換, 再重組 command lline!</p>
+</blockquote>
+<p>有了這兩道基礎後, 才讓我們來看看 wildcard 是甚麼回事吧.</p>
+<p><strong>Part-I: Wildcard</strong></p>
+<p>首先, wildcard 也是屬於 command line 的處理工序, 作用於 argument 裡的 path 之上.
+沒錯, 它不用在 command_name 也不用在 options 上.
+而且, 若 argument 不是 path 的話, 那也與 wildcard 無關.
+換句更為精確的定義來講, wildcard 是一種命令行的路逕擴展 (path expansion) 功能.
+提到這個擴展, 那就不要忘記了 command line 的 &quot;重組&quot; 特性了!
+是的, 這與變量替換 (variable substitution) 及命令替換 (command substitution) 的重組特性是一樣的!
+也就是在 wildcard 進行擴展後, 命令行會先完成重組才會交給 shell 來處理.</p>
+<p>了解了 wildcard 的擴展與重組特性後, 接下來, 讓我們了解一些常見的 wildcard 吧:</p>
+<ul>
+<li>*: 匹配 0 或多個字元</li>
+<li>?: 匹配任意單一字元</li>
+<li>_: 匹配 list 中的任意單一字元(註一)</li>
+<li>[!list]: 匹配不在 list 中的任意單一字元</li>
+<li>{string1,string2,...}: 匹配 sring1 或 string2 (或更多)其一字串</li>
+<li>(註一: list 可以為指定的個別字元, 如 abcd; 也可以為一段 ASCII 字元的起止範圍, 如: a-d .)</li>
+</ul>
+<p>例:</p>
+<ul>
+<li>a*b: a 與 b 之間可以有任意長度的任意字元, 也可以一個也沒有, 如: aabcb, axyzb, a012b, ab 等.</li>
+<li>a?b: a 與 b 之間必須也只能有一個字元, 可以是任意字元, 如: aab, abb, acb, a0b 等.</li>
+<li>a[xyz]b: a 與 b 之間必須也只能有一個字元, 但只能是 x 或 y 或 z, 如: axb, ayb, azb 這三個.</li>
+<li>a[!0-9]b: a 與 b 之間必須也只能有一個字元, 但不能是阿拉伯數字, 如: axb, aab, a-b 等.</li>
+<li><p>a{abc,xyz,123}b: a 與 b 之間只能是 abc 或 xyz 或 123 這三個字串之一, 如 aabcb, axyzb, a123b 這三個.</p>
+</li>
+<li><p>注意:*</p>
+</li>
+</ul>
+<p>1) [!] 中的 ! 只有放在第一順位時, 才有排除之功. 舉例說:</p>
+<blockquote>
+<p>[!a]<em> 表示當前目錄下所有不以 a 開首的路逕名稱.
+/tmp/[a!]</em> 表示 /tmp 目錄下以 a 或 ! 開首的路逕名稱. (思考: 為何 ! 前面要加 \ 呢? 提示: 十三問之 4)</p>
+</blockquote>
+<p>2) [-] 中的 - 左右兩邊均有字元時, 才表示一段範圍, 否則僅作 &quot;-&quot;(減號) 字元來處理. 舉例說:</p>
+<blockquote>
+<p>/tmp/<em>[-z]/[a-zA-Z]</em> 表示 /tmp 目錄下所有以 z 或 - 結尾的子目錄下以英文字母 (不分大小寫) 開首的路逕名稱.</p>
+</blockquote>
+<p>3) 以 * 或 ? 開首的 wildcard 不能匹配隱藏文件(即以 . 開首的文件). 舉例說:</p>
+<blockquote>
+<p><em>.txt 並不能匹配 .txt 但可匹配 1.txt 這樣的路逕名稱.
+但 1</em>txt 及 1?txt 均可匹配 1.txt 這樣的路逕名稱.</p>
+</blockquote>
+<p>基本上, 要掌握 wildcard 並不難, 只要多加練習, 再勤於思考, 就能熟加運用了.
+再次提醒: 別忘了 &quot;擴充 + 重組&quot; 這個重要特性, 而且只作用在 argument 的 path 上.
+比方說, 假設當前目錄下有 a.txt b.txt c.txt 1.txt 2.txt 3.txt 這幾份文件.
+當我們在命令行中下達 ls -l [0-9].txt 的命令行時, 
+因為 wildcard 處於 argument 的位置上, 於是根據其匹配的路逕, 擴展為 1.txt 2.txt 3.txt ,
+再重組出 ls -l 1.txt 2.txt 3.txt 這樣的命令行.
+因此, 你在命令行上敲 ls -l [0-9].txt 與 ls -l 1.txt 2.txt 3.txt 都是同樣的結果, 其原因正是於此了... :)</p>
+<p>(順道一提: <code>eval</code>)</p>
+<p>講到 command line 的重組特性, 真的需要我們好好的加以理解的.
+如此便能抽絲剝襺的一層層的將整個 command line 分析得一清二楚, 而不至於含糊.
+假如這個重組特性理解下來, 那麼, 接下來我們介紹一個好玩的命令 --- <code>eval</code> .</p>
+<p>我們在不少變量替換的過程中, 常碰到所謂的複式變量的問題, 如:</p>
+<pre><code>a=1
+A1=abc
+</code></pre><p>我們都知道 <code>echo $A1</code> 就可得到 <code>abc</code> 這個結果.
+然而, 我們能否用 <code>$A$a</code> 來取代 <code>$A1</code> 而同樣替換出 <code>abc</code> 呢?</p>
+<p>這個問題我們可用很輕鬆的用 <code>eval</code>  來解決:</p>
+<pre><code>eval echo \$A$a
+</code></pre><p>說穿了, <code>eval</code> 只不過是在命令行完成替換重組後, 再來一次替換重組罷了...
+就是這麼簡單啦~~~   ^_^</p>
+</section></article><article id="B1-II"><h1><span class="number">B1-II.</span><span class="title"> [^] 跟 [!] 差在哪？(Regular Expression)</span><a href="http://bbs.chinaunix.net/viewthread.php?tid=218853&amp;extra=&amp;page=16#pid2934852">#</a></h1><section><p>接下來的 Regular Expression(RE) 可是個大題目, 要講的很多, 我這裡當然不可能講得很完全.
+只希望帶給大家一個基本的入門概念, 就很是足夠了...</p>
+<p>先來考一下英文好了: What is expression?<br>簡單來說, 就是 &quot;表達&quot;, 也就是人們在溝通時所要陳述的內容.<br>然而, 生活中, 表達方要清楚的將意思描述清楚而讓接收方完整且無誤的領會, 可不是件容易的事情.<br>因而才會出現那麼多的 &quot;誤會&quot;, 真可嘆句 &quot;表達不易&quot; 啊....<br>同樣的情形也發生在電腦的資料處理過程中, 尤其是當我們在描術一段 &quot;文字內容&quot; 的時候...<br>那麼, 我們不禁要問: 有何方法可以讓大家的誤會降至最低程度而讓表達的精確度達到最高程度呢?<br>答案就是 &quot;標準化&quot; 了, 亦就是我們這裡要談的 Regular Expression 啦....  ^_^</p>
+<p>然而, 在進入 RE 介紹之前, 不防先讓我們溫習一下 shell 十三問第 4 問, 也就是關於 quoting 的部份.
+關鍵是要能夠區分 shell command line 上的 meta 與 literal 這兩種不同的字符類別.
+然後, 我這裡才跟你講:<br>--- RE 表達式裡的字符也是分為 meta 與 literal 這兩種!<br>呵, 不知親愛的讀者是否被我搞混亂了呢? ...  ^_^<br>這也難怪啦, 因為這的確是最容易混亂的地方, 剛學 RE 的朋友很多時候都死在這裡!
+因此請特別小心理解哦...<br>簡單而言, 除非你將 RE 寫在特定程式使用的腳本裡,
+否則, 我們的 RE 也是透過 command line 輸入的.
+然而, 不少 RE 所始用的 meta 字符, 跟 shell meta 字符是衝突的.
+比方說, * 這個字符, 在 RE 裡是一個 modifier(後述), 在 command line 上, 卻是個 wildcard !</p>
+<p>那麼, 我們該如何解決這樣的衝突呢? 關鍵就是看你對十三問第 4 問所提的 quoting 是否夠理解了!<br>若你明白到 shell quoting 就是在 command line 上關閉 shell meta 這一基本原理,
+那你就能很輕鬆的解決 RE meta 與 shell meta 的衝突問題了:<br>--- 用 shell quoting 關掉 shell meta 就是了!<br>就這麼簡單...  ^_^<br>再以剛提到的 <em> 字符為例, 若在 command line 中沒有 quoting 處理的話, 如 abc</em> , 
+那就會被作為 wildcard expansion 來擴充及重組了.<br>若將之置於 quoting 中, 如 &quot;abc*&quot;, 則可避免 wildcard expansion 的處理.</p>
+<p>好了, 說了大半天, 還沒進入正式的 RE 介紹呢...<br>大家別急, 因為我的教學風格就是要先建立基礎, 循序漸進的...  ^_^<br>因此, 我這裡還要在囉唆一個觀念, 才會到 RE 的說明啦... (哈... 別打我....)<br>當我們在談到 RE 時, 千萬別跟 wildcard 搞混在一起!<br>尤其在 command line 的位置裡, wildcard 只作用於 argument 的 path 上.<br>但是 RE 卻只用於 &quot;字串處理&quot; 的程式之中, 這與路逕名稱一點關系也沒有!<br>RE 所處理的字串通常是指純文檔或透過 stdin 讀進的內容...</p>
+<p>okay, 夠了夠了, 我已看到一堆人開始出現不大耐煩的樣子了....  ^_^<br>現在, 就讓我門登堂入室, 撩開 RE 的神秘面紗吧, 這樣可以放過我了吧? 哈哈...</p>
+<p>在 RE 的表達式裡, 主要分兩種字符(character): literal 與 meta.<br>所謂 literal 就是在 RE 裡不具特殊功能的字符, 如 abc, 123 這些;<br>而 meta 在 RE 裡具有特殊的功能, 要關閉之, 需在 meta 前面使用 escape()字符.  </p>
+<p>然而, 在介紹 meta 之前, 先讓我們來認識一下字符組合 (character set) 會更好些.<br>所謂的 char. set 就是將多個連續的字符作一個集合, 比方說:</p>
+<ul>
+<li>abc: 表示 abc 三個連續的字符, 但彼此獨立而非集合. (可簡單視為三個 char. set)</li>
+<li>(abc): 表示 abc 這三個連續字符的集合. (可簡單視為一個 char. set)</li>
+<li>abc|xyz: 表示或 abc 或 xyz 這兩個 char. set 之一. </li>
+<li>[abc]: 表示單一字符, 可為 a 或 b 或 c . (與 wildcard 之 [abc] 原理相同)</li>
+<li>[^abc]: 表示單一字符, 不為 a 或 b 或 c 即可. (與 wildcard 之 [!abc] 原理相同)</li>
+<li>. : 表示任意單一字符. (與 wildcard 之 ? 原理相同)</li>
+</ul>
+<p>在認識了 char. set 這個概念後, 然後再讓我們多認識幾個 RE 中常見的 meta 字符:</p>
+<blockquote>
+<p>錨點(anchor)<br>用以標識 RE 於句子中的位置所在. 常見有:</p>
+<ul>
+<li>^: 表示句首. 如 ^abc 表示以 abc 開首的句子.</li>
+<li>$: 表示句尾. 如 abc$ 表示以 abc 結尾的句子.</li>
+<li>\&lt;: 表示詞首. 如 \&lt;abc 表示以 abc 開首的詞.</li>
+<li>>: 表示詞尾. 如 abc> 表示以 abc 結尾的詞.</li>
+</ul>
+<p>修飾字符(modifier)<br>獨立表示時本身不具意義, 專門用以修改前一個 char. set 的出現次數. 常見有:</p>
+<ul>
+<li>*: 表示前一個 char. set 的出現次數為 0 或多次. 如 ab*c 表示 a 與 c 之間可有 0 或多個 b 存在.</li>
+<li>?: 表示前一個 char. set 的出現次數為 0 或 1 次. 如 ab?c 表示 a 與 c 之間可有 0 或 1 個 b 存在.</li>
+<li>+: 表示前一個 char. set 的出現次數為 1 或多次. 如 ab+c 表示 a 與 c 之間可有 1 或多個 b 存在.</li>
+<li>{n}: 表示前一個 char. set 的出現次數必須為 n 次. 如 ab{3}c 表示 a 與 c 之間必須有 3 個 b 存在.</li>
+<li>{n,}: 表示前一個 char. set 的出現次數至少為 n 次. 如 ab{3,}c 表示 a 與 c 之間至少有 3 個 b 存在.</li>
+<li>{n,m}: 表示前一個 char. set 的出現次數為 n 到 m 次. 如 ab{3,5}c 表示 a 與 c 之間有 3 到 5 個 b 存在.</li>
+</ul>
+</blockquote>
+<p>然而, 當我們在識別 modifier 時, 卻很容易忽略 &quot;邊界(boundary)&quot; 字符的重要性.<br>以剛提到的 ab{3,5}c 為例, 這裡的 a 與 c 就是邊界字符了.<br>若沒有邊界字符的幫忙, 我們很容以作出錯誤的解讀.<br>比方說: 我們用 ab{3,5} 這個 RE (少了 c 這個邊界字符)可以抓到 abbbbbbbbbbc (a 後有 10 個 b)這串字嗎?<br>從剛才的 modifier 我們一般會認為我們要的 b 是 3 到 5 個, 若超出了此範圍, 就不是我們要表達的.<br>因此, 我們或會很輕率的認為這個 RE 抓不到結果（上述“ａbbbbbbbbbbc”字串）...<br>然而答案卻是可以的! 為甚麼呢?<br>讓我們重新解讀 ab{3,5} 這個 RE 看看:<br>我們要表達的是 a 後接 3 到 5 個 b 即可, 但 3 到 5 個 b 後面我們卻沒規定是甚麼, 
+因此在 RE 後面可以是任意的文字, 當然包括 b 也可以啦! (明白了嗎?)<br>同樣的, 我們用 b{3,5}c 也同樣可以抓到 abbbbbbbbbbc 這串字的.<br>但我們若使用 ab{3,5}c 這樣的 RE 時, 由於同時有 a 與 c 這兩個邊界字符, 那就截然不同了!  </p>
+<p>有空再思考一下, 為何我們用下面這些 RE 都可抓到 abc 這串字呢?<br>x<em><br>ax</em>, abx<em>, ax</em>b<br>abcx<em>, abx</em>c, ax<em>bc<br>bx</em>c, bcx<em>, x</em>bc<br>...(還有更多...)<br>但, 若我們在這些 RE 前後分別加一個 ^ 與 $ 這樣的 anchor, 那又如何呢?</p>
+<p>剛學 RE 時, 只要能掌握上面這些基本的 meta 大蓋就可以入門了.
+一如前述, RE 是一種規範化的文字表達方式, 主要用於某些文字處理工具之間,
+如 <code>grep</code>, <code>perl</code>, <code>vi</code>, <code>awk</code>, <code>sed</code>, 等等. 常用以表示一段連續的字串, 捕獲之或替換之.
+然而, 每種工具對 RE 表達式的具體解讀或有一些細微差異, 不過, 基本原則還是一致的.
+只要能掌握 RE 的基本原理, 那就一理通百理明了, 只是在實作時稍加變通即可. </p>
+<p>比方以 <code>grep</code> 來說, 在 Linux 上你可找到 <code>grep</code>, <code>egrep</code>, <code>fgrep</code> 這幾個程式, 其差異大致如下:</p>
+<p><strong><code>grep</code>:</strong></p>
+<p>傳統的 <code>grep</code> 程式, 在沒有參數的情況下, 只輸出符合 RE 字串之句子. 常見參數如下:</p>
+<ul>
+<li>-v: 逆反模示, 只輸出 &quot;不含&quot; RE 字串之句子.</li>
+<li>-r: 遞迴模式, 可同時處理所有層級子目錄裡的文件.</li>
+<li>-q: 靜默模式, 不輸出任何結果(<code>stderr</code> 除外. 常用以獲取 return value, 符合為 <code>true</code>, 否則為 <code>false</code> .)</li>
+<li>-i: 忽略大小寫.</li>
+<li>-w: 整詞比對, 類似 \<word\> .</li>
+<li>-n: 同時輸出行號.</li>
+<li>-c: 只輸出符合比對的行數.</li>
+<li>-l: 只輸出符合比對的文件名稱.</li>
+<li>-o: 只輸出符合 RE 的字串. (gnu 新版獨有, 不見得所有版本都支持.)</li>
+<li>-E: 切換為 <code>egrep</code> .</li>
+</ul>
+<p><strong><code>egrep</code>:</strong></p>
+<p>為 <code>grep</code> 的擴充版本, 改良了許多傳統 <code>grep</code> 不能或不便的操作. 比方說:</p>
+<ul>
+<li><code>grep</code> 之下不支持 ? 與 + 這兩種 modifier, 但 <code>egrep</code> 則可.</li>
+<li><code>grep</code> 不支持 a|b 或 (abc|xyz) 這類 &quot;或一&quot; 比對, 但 <code>egrep</code> 則可.</li>
+<li><code>grep</code> 在處理 {n,m} 時, 需用 {與 } 處理, 但 <code>egrep</code> 則不需.
+諸如此類的... 我個人會建議能用 <code>egrep</code> 就不用 <code>grep</code> 啦...  ^_^</li>
+</ul>
+<p><strong><code>fgrep</code>:</strong></p>
+<p>不作 RE 處理, 表達式僅作一般字串處理, 所有 meta 均失去功能.</p>
+<p>好了...
+關於 RE 的入門, 我暫時就介紹到這裡. 
+雖然寫得有點亂, 且有些觀念也不很精確, 不過, 姑且算是對大家有一個交差吧.... ^<em>^
+若這兩天還有時間的話, 我再舉些範例來分析一下, 以助大家更好的理解. 
+假如更有可能的話, 也順道為大家介紹一下 <code>sed</code> 這個工具.
+(啊, 這次我不敢作保證了哦... ^</em>^)</p>
+</section></article></div><!--Footer--><footer><p> 
+Built with <a href="http://nodejs.org/">Node.js </a>using a <a href="http://jade-lang.com/">jade </a>template. 
+Hosted by <a href="http://https://github.com/">Github</a>. <a href="https://github.com/ververcpp/Shell13Q">Fork </a>me on Github.</p></footer><script src="javascript/jquery.min.js"></script><script src="javascript/prettify.js"></script><script src="javascript/main.js"></script></body></html>
