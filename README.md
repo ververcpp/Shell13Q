@@ -11,6 +11,7 @@ ChinaUnix論壇shell基礎學習經典。
 網站引擎借鑑[JavaScript-Garden](https://github.com/BonsaiDen/JavaScript-Garden)，使用Node和Jade創建， 文章使用Markdown生成。
 
 配置环境
+
 1. ```git clone https://github.com/ververcpp/Shell13Q.git```；
 2. 首先执行```cd Shell13Q && npm install```安装node依赖的库；
 3. 执行```node build.js```生成页面；

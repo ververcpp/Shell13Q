@@ -2,6 +2,7 @@ var markdown = require('marked');
 var fs = require('fs');
 var jade = require('jade');
 var _ = require('lodash');
+var pangunode = require('pangunode');
 
 function main(options) {
   loadLanguages(options.languagesDir)
@@ -31,7 +32,7 @@ function loadLanguage(path) {
       return _.assign(section, {
         isIntro: section.link === 'Intro',
         article: loadArticle(path + '/Shell13Q-' + section.link + '.md')
-      })
+      });
     })
   });
   language.navigation = language.sections;
@@ -40,6 +41,7 @@ function loadLanguage(path) {
 
 function loadArticle(path) {
   var text = fs.readFileSync(path, "utf-8");
+  text = pangunode(text);
   var title = text.slice(0, text.indexOf('\n'));
   var content = processContent(text.slice(title.length)); 
   title = '<span class="number">' + title.slice(0, title.indexOf('.') + 1) + '</span><span class="title">' + title.slice(title.indexOf('.') + 1) + '</span>';
@@ -49,7 +51,7 @@ function loadArticle(path) {
   return {
     title: title,
     content: content
-  }
+  };
 }
 
 function processContent(text) {
@@ -87,6 +89,6 @@ function writeTemplate(options, language) {
 exports.build = function (options) {
   options = _.defaults(options || {}, { languagesDir: 'doc', baseLanguage: 'zhtw', template: 'Shell13Q.jade', pathPrefix: 'Shell13Q/', outDir: 'site' });
   return main(options);
-}
+};
 
 exports.build();

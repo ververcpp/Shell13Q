@@ -8,3 +8,5 @@
 *.src.md
 *.DS_store
 *.sass-cache
+*.sublime-project
+*.sublime-workspace

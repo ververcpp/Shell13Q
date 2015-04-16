@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "jade": "^1.7.0",
+    "lodash": "^2.4.1",
     "marked": "^0.3.2",
-    "lodash": "^2.4.1"
+    "pangunode": "^0.1.0"
   },
   "devDependencies": {
     "jade": "^1.8.1",
